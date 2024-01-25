@@ -1,0 +1,64 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+  packed_env.tar /packed_env.tar
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%post
+  # So we dont have to interactivly configure tzdata 
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Install essential packages
+  apt-get update && apt-get -y upgrade
+  apt-get -y install \
+    build-essential \
+    curl \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    git
+  rm -rf /var/lib/apt/lists/*
+  apt-get clean
+
+  # Installing Miniconda 3
+  curl https://repo.anaconda.com/miniconda/Miniconda3-py311_23.10.0-1-Linux-x86_64.sh > /install_conda.sh
+  chmod +x /install_conda.sh
+  /install_conda.sh -b -p /opt/conda
+  rm /install_conda.sh
+  tar xvf /packed_env.tar
+  rm /packed_env.tar
+  echo ". /opt/conda/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+  echo "conda activate {conda_env}" >> $SINGULARITY_ENVIRONMENT
+
+%labels
+  Program CheckV
+  ProgramVersion v1.0.1
+  ContainerVersion 1
+  Website https://bitbucket.org/berkeleylab/checkv/src/master/
+
+%help
+
+#######################
+#### CheckV v1.0.1 ####
+#######################
+
+CheckV is a fully automated command-line pipeline for assessing the quality of single-contig viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes.
+
+
+COMMANDS:  
+  
+  Print help message:
+    singularity exec CheckV_v1.0.1-rev1.sif checkv --help
+  
+  Basic run examples:
+    singularity exec CheckV_v1.0.1-rev1.sif checkv end_to_end input_file.fna output_directory -t 16
+
+

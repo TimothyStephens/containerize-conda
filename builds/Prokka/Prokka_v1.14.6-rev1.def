@@ -1,0 +1,31 @@
+Bootstrap: docker
+From: staphb/prokka:1.14.6
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%labels
+  Program Prokka
+  ProgramVersion v1.14.6
+  ContainerVersion 1
+  Website https://github.com/tseemann/prokka
+
+%help
+
+########################
+#### Prokka v1.14.6 ####
+########################
+
+Rapid prokaryotic genome annotation
+
+
+COMMANDS:  
+  
+  Print help message:
+    singularity exec Prokka_v1.14.6-rev1.sif prokka --help
+  
+  Basic run examples:
+    singularity exec Prokka_v1.14.6-rev1.sif prokka --outdir mydir --prefix mygenome contigs.fa
+
+

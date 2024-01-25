@@ -1,0 +1,33 @@
+Bootstrap: docker
+From: metabat/metabat:v2.17-21-g2740d8d
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%labels
+  Program MetaBAT
+  ProgramVersion v2.17-21-g2740d8d
+  ContainerVersion 1
+  Website https://bitbucket.org/berkeleylab/metabat/src/master/
+
+%help
+
+###################################
+#### MetaBAT v2.17-21-g2740d8d ####
+###################################
+
+MetaBAT: A robust statistical framework for reconstructing genomes from metagenomic data
+
+
+COMMANDS:  
+  
+  Print help message:
+    singularity exec MetaBAT_v2.17-21-g2740d8d-rev1.sif jgi_summarize_bam_contig_depths --help
+    singularity exec MetaBAT_v2.17-21-g2740d8d-rev1.sif metabat2 --help
+  
+  Basic run examples:
+    singularity exec MetaBAT_v2.17-21-g2740d8d-rev1.sif jgi_summarize_bam_contig_depths --outputDepth depth.txt *.bam
+    singularity exec MetaBAT_v2.17-21-g2740d8d-rev1.sif metabat2 -i assembly.fasta -a depth.txt -o bins_dir/bin
+
+

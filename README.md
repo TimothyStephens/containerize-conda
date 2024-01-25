@@ -1,5 +1,18 @@
 # Containerize an existing conda environment
 
+Forked 2023/11/30 - Use this repo to store original code + conda/mamba build recipes and singularity templates for projects that I have containerized
+
+## Running my new container
+
+```
+singularity inspect <SIF>
+singularity run-help <SIF>
+singularity exec <SIF> <COMMAND> -h
+singularity exec <SIF> <COMMAND> .. .. .. ..
+```
+
+## Old README
+
 I use conda environments for working on data analysis projects.
 Sometimes I need to revert to install using `pip` or `R`'s
 `install.packages` if a package is not on bioconda or conda-forge.

@@ -85,7 +85,11 @@ error() {
 
 
 ## Load arguments
-for key in $1 $2; do
+set +eu
+x1="$1"
+x2="$2"
+set -eu
+for key in $x1 $x2; do
   case $key in
     -h|--help)
       usage

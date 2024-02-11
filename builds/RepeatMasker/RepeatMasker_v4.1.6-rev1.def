@@ -1,0 +1,126 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+  packed_env.tar /packed_env.tar
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%post
+  # So we dont have to interactivly configure tzdata 
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Install essential packages
+  apt-get update && apt-get -y upgrade
+  apt-get -y install \
+    build-essential \
+    curl \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    git
+  rm -rf /var/lib/apt/lists/*
+  apt-get clean
+
+  # Installing Miniconda 3
+  curl https://repo.anaconda.com/miniconda/Miniconda3-py311_23.10.0-1-Linux-x86_64.sh > /install_conda.sh
+  chmod +x /install_conda.sh
+  /install_conda.sh -b -p /opt/conda
+  rm /install_conda.sh
+  tar xvf /packed_env.tar
+  rm /packed_env.tar
+  echo ". /opt/conda/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+  echo "conda activate {conda_env}" >> $SINGULARITY_ENVIRONMENT
+
+%labels
+  Program RepeatMasker
+  ProgramVersion v4.1.6
+  ContainerVersion 1
+  Website https://www.repeatmasker.org/RepeatMasker/
+
+%help
+
+#####################################################
+#### RepeatMasker v4.1.6 (Dfam3.8 - Partition 0) ####
+#####################################################
+
+RepeatMasker is a program that screens DNA sequences for interspersed repeats and low complexity DNA sequences. The output of the program is a detailed annotation of the repeats that are present in the query sequence as well as a modified version of the query sequence in which all the annotated repeats have been masked (default: replaced by Ns).
+
+NOTE:
+      - Only partition 0 from Dfam3.8 was used to build the RepeatMasker library because the full database is too large to be easily portable (>700GB).
+      - Fasta files were generated for partitions 0-9 so that they can be used as part of a custom repeat library.
+
+#          Partition 0 [dfam38_full.0.h5]: root
+#                         Mammalia, Amoebozoa, Bacteria <bacteria>, Choanoflagellata,
+#                         Rhodophyta, Haptista, Metamonada, Fungi, Sar, Placozoa,
+#                         Ctenophora <comb jellies>, Filasterea, Spiralia, Discoba,
+#                         Cnidaria, Porifera, Viruses
+#          Partition 1 [dfam38_full.1.h5]: Obtectomera
+#          Partition 2 [dfam38_full.2.h5]: Euteleosteomorpha
+#          Partition 3 [dfam38_full.3.h5]: Sarcopterygii
+#                         Sauropsida, Coelacanthimorpha, Amphibia, Dipnomorpha
+#          Partition 4 [dfam38_full.4.h5]: Diptera
+#          Partition 5 [dfam38_full.5.h5]: Viridiplantae
+#          Partition 6 [dfam38_full.6.h5]: Deuterostomia
+#                         Chondrichthyes, Hemichordata, Cladistia, Holostei, Tunicata,
+#                         Cephalochordata, Cyclostomata <vertebrates>, Osteoglossocephala,
+#                         Otomorpha, Elopocephalai, Echinodermata, Chondrostei
+#          Partition 7 [dfam38_full.7.h5]: Hymenoptera
+#          Partition 8 [dfam38_full.8.h5]: Ecdysozoa
+#                         Nematoda, Gelechioidea, Yponomeutoidea, Incurvarioidea,
+#                         Chelicerata, Collembola, Polyneoptera, Tineoidea, Apoditrysia,
+#                         Monocondylia, Strepsiptera, Palaeoptera, Neuropterida, Crustacea,
+#                         Coleoptera, Siphonaptera, Trichoptera, Paraneoptera, Myriapoda,
+#                         Scalidophora
+
+
+FASTA files with consensus sequences from each partition to use in custom repeat libraries.
+Becuase of the way famdb.py work, paritions 1-8 include sequences from partition 0.
+                                    [path in container]                                         [no. seqs]
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.0.fa      295552
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.1.fa      907394
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.2.fa      813185
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.3.fa      693546
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.4.fa      641457
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.5.fa      472219
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.6.fa      576140
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.7.fa      617213
+/opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.8.fa      921787
+
+
+
+COMMANDS:
+  
+  Print help message:
+    singularity exec RepeatMasker_v4.1.6-rev1.sif RepeatMasker -help
+  
+  Basic run examples:
+    # Rename seqs so headers < 50 characters (needed by RepeatMasker)
+    singularity exec RepeatMasker_v4.1.6-rev1.sif rename_sequences -i genome.fa -o renamed.fa -f renamed.txt
+    
+    # Create custom repeat library with parition 0 and RepeatModeler consensis sequences
+    cat genome.fa.RMDB-families.fa > custom_repeat_library.fa
+    singularity exec RepeatMasker_v4.1.6-rev1.sif cat /opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/Libraries/famdb/dfam38_full.0.fa >> custom_repeat_library.fa
+    
+    # Run RepeatMasker
+    singularity exec RepeatMasker_v4.1.6-rev1.sif RepeatMasker -no_is -a -x -gff -pa 4 -lib custom_repeat_library.fa renamed.fa
+    
+    # Get softmasked genome
+    singularity exec RepeatMasker_v4.1.6-rev1.sif bedtools maskfasta -fi renamed.fa -fo renamed.fa.softmasked -bed renamed.fa.out.gff -soft
+    
+    # Rename RepeatMasker files to original sequence names
+    singularity exec RepeatMasker_v4.1.6-rev1.sif unrename_sequences -i renamed.fa.masked     -o genome.fa.masked      -f renamed.txt -t fasta
+    singularity exec RepeatMasker_v4.1.6-rev1.sif unrename_sequences -i renamed.fa.softmasked -o genome.fa.softmasked  -f renamed.txt -t fasta
+    singularity exec RepeatMasker_v4.1.6-rev1.sif unrename_sequences -i renamed.fa.out.gff    -o genome.fa.out.gff     -f renamed.txt -t gff
+    
+    # Generate repeat landscape
+    singularity exec RepeatMasker_v4.1.6-rev1.sif calcDivergenceFromAlign.pl -s genome.fa.divsum genome.fa.align
+    singularity exec RepeatMasker_v4.1.6-rev1.sif createRepeatLandscape.pl -g GENOME_SIZE -div genome.fa.divsum > genome.fa.RepeatLandscape.html
+
+

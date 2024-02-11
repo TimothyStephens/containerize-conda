@@ -1,0 +1,17 @@
+##gff-version 2
+##date 2022-03-18
+##sequence-region genome.fa
+Seq000000000001	RepeatMasker	similarity	1	300	17.2	-	.	Target "Motif:rnd-5_family-3251" 1968 2265
+Seq000000000001	RepeatMasker	similarity	138	330	11.9	+	.	Target "Motif:rnd-6_family-1279" 253 439
+Seq000000000001	RepeatMasker	similarity	306	1257	10.0	+	.	Target "Motif:rnd-1_family-172" 147 1106
+
+Seq000000000002	RepeatMasker	similarity	1174	1277	 2.1	-	.	Target "Motif:rnd-1_family-1359" 4 100
+Seq000000000002	RepeatMasker	similarity	1275	1486	14.6	+	.	Target "Motif:rnd-1_family-979" 62 271
+Seq000000000002	RepeatMasker	similarity	1498	1812	13.8	-	.	Target "Motif:rnd-1_family-979" 99 415
+
+Seq000000000001	RepeatMasker	similarity	1798	1874	13.5	-	.	Target "Motif:rnd-1_family-795" 56 129
+##
+
+Seq000000000001	Seq000000000001
+Seq000000000001	Seq000000000002
+

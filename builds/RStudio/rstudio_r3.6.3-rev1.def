@@ -1,0 +1,31 @@
+Bootstrap: docker
+From: rocker/rstudio:3.6.3
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%labels
+  Program RStudio-R_v3.6.3
+  ProgramVersion v3.6.3
+  ContainerVersion 1
+  Website https://github.com/rocker-org/rocker-versioned
+
+%help
+
+###############################
+#### RStudio with R v3.6.3 ####
+###############################
+
+RStudio server running R v3.6.3
+
+
+COMMANDS:  
+  
+  Basic run examples:
+    singularity exec \
+      --bind run:/run,var-lib-rstudio-server:/var/lib/rstudio-server,database.conf:/etc/rstudio/database.conf \
+      rstudio_r3.6.3-rev1.sif /usr/lib/rstudio-server/bin/rserver \
+        --auth-none=0 --auth-pam-helper-path=pam-helper --server-user=$(whoami)
+
+

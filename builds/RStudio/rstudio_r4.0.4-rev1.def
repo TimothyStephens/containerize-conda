@@ -1,0 +1,31 @@
+Bootstrap: docker
+From: rocker/rstudio:4.0.4
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%labels
+  Program RStudio-R_v4.0.4
+  ProgramVersion v4.0.4
+  ContainerVersion 1
+  Website https://github.com/rocker-org/rocker-versioned2
+
+%help
+
+###############################
+#### RStudio with R v4.0.4 ####
+###############################
+
+RStudio server running R v4.0.4
+
+
+COMMANDS:  
+  
+  Basic run examples:
+    singularity exec \
+      --bind run:/run,var-lib-rstudio-server:/var/lib/rstudio-server,database.conf:/etc/rstudio/database.conf \
+      rstudio_r4.0.4-rev1.sif /usr/lib/rstudio-server/bin/rserver \
+        --auth-none=0 --auth-pam-helper-path=pam-helper --server-user=$(whoami)
+
+

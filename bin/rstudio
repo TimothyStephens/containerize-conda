@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+
+
+## The only hard boiled path required by the whole script
+sif_dir="/scratch/singularity"
+
+## Envs
+export base_mount=$(echo $PWD | awk -F'/' '{print $2}')
+export cpus=$(lscpu | grep -E '^CPU\(' | awk '{print $2}')
+
+## Useage information
+usage() {
+echo "##
+## RStudio server
+##
+
+Setup and run an RStudio server.
+
+Usage: 
+$(basename $0)
+
+Options (all optional):
+-c, --cpus                 Number of CPUs to set OMP_NUM_THREADS to prevent OpenBLAS (and any other OpenMP-enhanced
+                           libraries used by R) from spawning more threads than the number of processors that the user 
+                           allocated to this job. Default to max cpus on the system: ${cpus}
+-h, --help                 This help message
+--debug                    Run debug mode
+" 1>&2
+exit 1
+}
+
+# See https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+while [ $# -gt 0 ]; do
+  key="$1"
+  case $key in
+    -c|--cpus)
+      cpus="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -h|--help)
+      usage
+      exit 1;
+      ;;
+    --debug)
+      set -x
+      shift # past argument
+      ;;
+    *) # unknown option
+      shift # past argument
+      ;;
+  esac
+done
+
+
+## Use script name to figure out which SIF file to run
+name=$(basename $0)
+
+# Default version
+version="4.3.2"
+prefix="rstudio_r4.3.2-rev1"
+
+case $NAME in
+
+  *"3.6.3"*)
+  version="3.6.3"
+  prefix="rstudio_r3.6.3-rev1"
+  ;;
+
+  *"4.0.4"*)
+  version="4.0.4"
+  prefix="rstudio_r4.0.4-rev1"
+  ;;
+
+  *"4.1.2"*)
+  version="4.1.2"
+  prefix="rstudio_r4.1.2-rev1"
+  ;;
+
+  *"4.2.3"*)
+  version="4.2.3"
+  prefix="rstudio_r4.2.3-rev1"
+  ;;
+
+  *"4.3.2"*)
+  version="4.3.2"
+  prefix="rstudio_r4.3.2-rev1"
+  ;;
+
+esac
+
+
+## Set RStudio output directory and SIF file using version info from file name
+workdir="${PWD}/rstudio-r_${version}"
+sif="${sif_dir}/${prefix}.sif"
+
+cat 1>&2 <<END
+Starting RStudio using R v${version}
+END
+
+## Setup config files for rsession
+mkdir -p -m 700 "${workdir}/run" "${workdir}/tmp" "${workdir}/var/lib/rstudio-server" "${workdir}/library"
+mkdir -p -m 700 "${workdir}/cache" "${workdir}/local" "${workdir}/config"
+
+## Generate secure cookie file if it doesnt exist
+cookie="${workdir}/tmp/rstudio-server/secure-cookie-key"
+if [ ! -e "${cookie}" ];
+then
+  mkdir -p -m 755 $(dirname "${cookie}")
+  uuidgen > "${cookie}"
+  chmod 600 "${cookie}"
+fi
+
+## Create RStudio config files
+cat > "${workdir}/database.conf" <<END
+provider=sqlite
+directory=/var/lib/rstudio-server
+END
+cat > "${workdir}/env-vars" <<END
+XDG_DATA_HOME=${workdir}
+END
+cat > "${workdir}/rsession.conf" << END
+session-default-working-dir=${PWD}
+session-default-new-project-dir=${PWD}
+END
+
+# Set OMP_NUM_THREADS to prevent OpenBLAS (and any other OpenMP-enhanced
+# libraries used by R) from spawning more threads than the number of processors
+# allocated to the job.
+#
+# Set R_LIBS_USER to a path specific to rocker/rstudio to avoid conflicts with
+# personal libraries from any R installation in the host environment
+cat > ${workdir}/rsession.sh <<END
+#!/bin/sh
+export OMP_NUM_THREADS=$cpus
+export R_LIBS_USER=${workdir}/library
+exec /usr/lib/rstudio-server/bin/rsession "\${@}"
+END
+chmod +x ${workdir}/rsession.sh
+
+## Setup bindings
+# Mount the current file system where we will be working
+SINGULARITY_BIND="/${base_mount}:/${base_mount}"
+# Add RStudio outdir bindings
+SINGULARITY_BIND="${SINGULARITY_BIND},${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
+SINGULARITY_BIND="${SINGULARITY_BIND},${workdir}/cache:/home/${USER}/.cache/rstudio,${workdir}/local:/home/${USER}/.local/share/rstudio,${workdir}/config:/home/${USER}/.config/rstudio"
+# Add config files
+SINGULARITY_BIND="${SINGULARITY_BIND},${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/env-vars:/etc/rstudio/env-vars,${workdir}/rsession.conf:/etc/rstudio/rsession.conf"
+# Add rsession.sh file
+SINGULARITY_BIND="${SINGULARITY_BIND},${workdir}/rsession.sh:/etc/rstudio/rsession.sh"
+export SINGULARITY_BIND
+
+## Singularity envs
+# Do not suspend idle sessions.
+# Alternative to setting session-timeout-minutes=0 in /etc/rstudio/rsession.conf
+# https://github.com/rstudio/rstudio/blob/v1.4.1106/src/cpp/server/ServerSessionManager.cpp#L126
+export SINGULARITYENV_RSTUDIO_SESSION_TIMEOUT=0
+export SINGULARITYENV_USER=$(id -un)
+export SINGULARITYENV_PASSWORD=$(openssl rand -base64 15)
+# get unused socket per https://unix.stackexchange.com/a/132524
+# tiny race condition between the python & singularity commands
+readonly PORT=$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+# Get node IP address.
+readonly IP=$(ifconfig -a | grep 'inet' | grep 'broadcast' | awk '{print $2}' | head -n 1)
+
+## Print run info
+login_info="${workdir}/login_info"
+cat 1>"${login_info}" 2>&1 <<END
+1. Copy the following into your web browser
+
+   ${IP}:${PORT}
+
+2. log in to RStudio Server using the following credentials:
+
+   user: ${SINGULARITYENV_USER}
+   password: ${SINGULARITYENV_PASSWORD}
+
+3. When done using RStudio Server, terminate the job by:
+
+     - Exit the RStudio Session ("power" button in the top right corner of the RStudio window)
+     - Cancel the command that is running on the server.
+
+NOTE: - Sometimes RStudio takes a few seconds to start, if the page wont load in your browser please try refreshing after waiting 5-10 seconds.
+      - This info has been saved to ${login_info} incase you need to access your server from a different machine
+
+END
+cat "${login_info}"
+
+singularity exec --cleanenv -W "${workdir}" --no-home \
+    ${sif} /usr/lib/rstudio-server/bin/rserver \
+            --www-port ${PORT} \
+            --server-user "${SINGULARITYENV_USER}" \
+            --secure-cookie-key-file="${cookie}" \
+            --auth-none=0 \
+            --auth-pam-helper-path=pam-helper \
+            --auth-stay-signed-in-days=30 \
+            --auth-timeout-minutes=0 \
+            --rsession-path=/etc/rstudio/rsession.sh
+

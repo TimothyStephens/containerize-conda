@@ -1,0 +1,34 @@
+Bootstrap: docker
+From: ultralytics/ultralytics:8.1.8-cpu
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%labels
+  Program YOLO
+  ProgramVersion v8.1.8-cpu
+  ContainerVersion 1
+  Website https://yolov8.com/
+
+%help
+
+#########################
+#### YOLO v8.1.8-cpu ####
+#########################
+
+YOLOv8 is a new state-of-the-art computer vision model built by Ultralytics, the creators of YOLOv5. The YOLOv8 model contains out-of-the-box support for object detection, classification, and segmentation tasks, accessible through a Python package as well as a command line interface.
+
+
+COMMANDS:  
+  
+  Print help message:
+    singularity exec YOLO_v8.1.8_cpu-rev1.sif yolo
+  
+  Basic run examples:
+    # Train using annotated photos and existing model
+    singularity exec YOLO_v8.1.8_cpu-rev1.sif yolo detect train data=coco128.yaml model=yolov8n.yaml epochs=100 imgsz=640
+    # Predict photo using trained model
+    singularity exec YOLO_v8.1.8_cpu-rev1.sif yolo detect predict model=yolov8n.pt source=bus.jpg
+
+

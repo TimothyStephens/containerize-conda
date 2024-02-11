@@ -52,6 +52,9 @@ From: ubuntu:20.04
 
 Assessing genome assembly and annotation completeness with Benchmarking Universal Single-Copy Orthologs (BUSCO)
 
+NOTE: The BUSCO datasets have been downloaded and are included as part of the container. The are avalibale 
+      through the $BUSCO_DATA env (see below example).
+
 
 COMMANDS:
   
@@ -59,7 +62,18 @@ COMMANDS:
     singularity exec BUSCO_v5.6.1-rev1.sif busco --help
   
   Basic run examples:
+    # To get a list of all pre-downloaded lineage datasets
+    singularity exec BUSCO_v5.6.1-rev1.sif ls -1d /opt/conda/envs/BUSCO_v5.6.1-rev1/data/busco_downloads/lineages/*
+    
+    # Replace XXXX with the full path to your lineage of choice (e.g., "/opt/conda/envs/BUSCO_v5.6.1-rev1/data/busco_downloads/lineages/eukaryota_odb10") and run to analyze genome.
     singularity exec BUSCO_v5.6.1-rev1.sif busco -i genome.fa -o genome.busco -m genome --lineage_dataset XXXX --cpu 12
-    singularity exec BUSCO_v5.6.1-rev1.sif busco -i genome.fa -o genome.busco -m genome --auto-lineage --cpu 12
+    
+    # *OR*
+    # Let BUSCO download the lineage file instead of using the packaged copies by replacing XXXX with just the lineage name (e.g. "eukaryota_odb10")
+    singularity exec BUSCO_v5.6.1-rev1.sif busco -i genome.fa -o genome.busco -m genome --lineage_dataset XXXX --cpu 12
+    
+    # *OR*
+    # To let BUSCO decide which lineage your data is from. 
+    singularity exec BUSCO_v5.6.1-rev1.sif busco -i genome.fa -o genome.busco -m genome --download_path $BUSCO_DATA --auto-lineage --cpu 12
 
 

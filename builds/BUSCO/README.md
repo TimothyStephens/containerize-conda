@@ -24,10 +24,6 @@ conda env config vars set PYTHONPATH=${conda_env}/lib/python3.7/site-packages
 # Download all lineage files
 mkdir ${conda_env}/data; cd ${conda_env}/data
 busco --download all
-conda env config vars set BUSCO_DATA=${conda_env}/data/busco_downloads
-# May have to manually edit:
-# $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
-# $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
 
 python ../../conda_to_singularity.py --template ${prefix}.def ${conda_env} ${prefix}.sif
 

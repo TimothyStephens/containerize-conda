@@ -85,14 +85,16 @@ md5sum -c *.md5sum
 gunzip *.h5.gz
 
 # Get fasta formated partitions (NOTE: need to have partition 0 with lower partitions for famdb to work)
-for i in {1..8}; do ( cd dfam38_full.$i.h5; ln -s ../dfam38_full.0.h5/dfam38_full.0.h5 ); done
-for i in {0..8}; do echo "python /opt/conda/envs/RepeatMasker_v4.1.6-rev1/share/RepeatMasker/famdb.py -i dfam38_full.$i.h5 families --format fasta_name -ad root > dfam38_full.$i.fa"; done | parallel -j 10
+mkdir fasta; cd fasta/
+for i in {1..8}; do ( mkdir dfam38_full.$i.h5; cd dfam38_full.$i.h5; ln -s ../../dfam38_full.0.h5; ln -s ../../dfam38_full.$i.h5 ); done
+for i in {0..8}; do echo "python ${conda_env}/share/RepeatMasker/famdb.py -i dfam38_full.$i.h5 families --format fasta_name -ad root > dfam38_full.$i.fa"; done | parallel -j 10
 
 # Copy everything over to conda
 # Need to do this depending on where you downloaded everything
 
 # Rebuild RepeatMasker library
-PATH="${conda_env}/bin:$PATH" ./configure
+PATH="${conda_env}/bin:$PATH"
+./configure
 
 conda env config vars set PERL5LIB=${conda_env}/share/RepeatMasker
 # May have to manually edit:

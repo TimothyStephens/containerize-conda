@@ -46,4 +46,37 @@ mv ${prefix}.sif /scratch/singularity/
 ```
 
 
+## v1.5.5_cuda12.1.0
+
+### Revision 1
+
+```bash
+program="ColabFold"
+version="1.5.5"
+cuda_version="12.1.0"
+revision="1"
+prefix="${program}_v${version}_cuda_v${cuda_version}-rev${revision}"
+
+cat ColabFold_cuda-rev${revision}.def \
+  | sed -e "s/{{COLABFOLD_VERSION}}/$version/g" -e "s/{{CUDA_VERSION}}/$cuda_version/g" -e "s/{{REVISION}}/$revision/g" \
+  | singularity build --fakeroot --force ${prefix}.sif /dev/stdin 
+```
+
+
+### Revision 2
+
+With custom scripts for cleaning inpu
+```bash
+program="ColabFold"
+version="1.5.5"
+cuda_version="12.1.0"
+revision="2"
+prefix="${program}_v${version}_cuda_v${cuda_version}-rev${revision}"
+
+cat ColabFold_cuda-rev${revision}.def \
+  | sed -e "s/{{COLABFOLD_VERSION}}/$version/g" -e "s/{{CUDA_VERSION}}/$cuda_version/g" -e "s/{{REVISION}}/$revision/g" \
+  | singularity build --fakeroot --force ${prefix}.sif /dev/stdin
+```
+
+
 

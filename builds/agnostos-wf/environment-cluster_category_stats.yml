@@ -1,0 +1,21 @@
+name: cluster_category_stats
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base
+  - r-data.table
+  - r-dbplyr
+  - r-entropy
+  - r-ggridges
+  - r-RSQLite
+  - r-tidyverse
+  - r-optparse
+  - r-maditr
+  - r-taxonomizr
+  - r-biocmanager

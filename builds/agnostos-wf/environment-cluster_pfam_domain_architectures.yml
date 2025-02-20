@@ -1,0 +1,21 @@
+name: cluster_pfam_domain_architectures
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base
+  - r-data.table
+  - r-igraph
+  - r-optparse
+  - r-plyr
+  - r-stringi
+  - r-stringr
+  - r-tidygraph
+  - r-tidyverse
+  - r-zoo
+  - r-biocmanager

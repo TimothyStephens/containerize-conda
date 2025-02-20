@@ -1,0 +1,19 @@
+name: report_maker
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base=3.6.3
+  - r-tidyverse
+  - r-knitr
+  - r-rmarkdown
+  - r-optparse
+  - r-kableextra
+  - r-r.utils
+  - r-ggrepel
+  - r-scales

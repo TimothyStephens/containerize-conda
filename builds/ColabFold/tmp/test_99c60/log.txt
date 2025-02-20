@@ -1,0 +1,2 @@
+seed=0 model=model_1_ptm recycle=0 plddt=0.885 ptm=0.860 i_ptm=0.844 multi=0.848
+seed=0 model=model_1_ptm recycle=1 plddt=0.902 ptm=0.886 i_ptm=0.873 multi=0.876 rmsd_tol=0.221

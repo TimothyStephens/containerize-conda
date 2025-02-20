@@ -1,0 +1,17 @@
+name: validation_summary
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base=3.6.3
+  - r-cowplot
+  - r-data.table
+  - r-ggrepel
+  - r-ggsci
+  - r-optparse
+  - r-tidyverse

@@ -1,0 +1,53 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+  /home/timothy/programs/mmseqs /mmseqs
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%post
+  # So we dont have to interactivly configure tzdata 
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Install essential packages
+  apt-get update && apt-get -y upgrade
+  apt-get -y install \
+    build-essential \
+    curl \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    git
+  rm -rf /var/lib/apt/lists/*
+  apt-get clean
+
+  # Installing Miniconda 3
+  echo 'export PATH="/mmseqs/bin:$PATH"' >> $SINGULARITY_ENVIRONMENT
+
+%labels
+  Program mmseqs2
+  ProgramVersion 113e3212c137d026e297c7540e1fcd039f6812b1
+  ContainerVersion 1
+  Website https://github.com/soedinglab/MMseqs2
+
+%help
+
+##########################################################
+#### mmseqs2 113e3212c137d026e297c7540e1fcd039f6812b1 ####
+##########################################################
+
+MMseqs2: ultra fast and sensitive search and clustering suite
+
+COMMANDS:
+  
+  Print help message:
+    singularity exec mmseqs2_113e3212c137d026e297c7540e1fcd039f6812b1-rev1.sif mmseqs --help
+  
+

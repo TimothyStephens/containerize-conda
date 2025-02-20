@@ -1,0 +1,19 @@
+name: functional_validation
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base
+  - r-data.table
+  - r-optparse
+  - r-proxy
+  - r-stringr
+  - r-tidyverse
+  - r-vegan
+  - r-biocmanager
+  - r-plyr

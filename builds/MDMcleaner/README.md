@@ -13,14 +13,14 @@ conda_env="/opt/conda/envs/${prefix}"
 mamba=$(which mamba)
 
 $mamba create -y -p ${conda_env} -c bioconda ${program}=${version}
-conda activate ${conda_env}
-mdmcleaner makedb -o ${conda_env}/share/mdmcleaner_database 1>download.log 2>&1
-mdmcleaner set_configs --db_basedir ${conda_env}/share/mdmcleaner_database
+#conda activate ${conda_env}
+#mdmcleaner makedb -o ${conda_env}/share/mdmcleaner_database 1>download.log 2>&1
+#mdmcleaner set_configs --db_basedir ${conda_env}/share/mdmcleaner_database
 
 python conda_to_singularity.py --template ${prefix}.def ${conda_env} ${prefix}.sif
 
 rm -fr ${conda_env}
-singularity exec ${prefix}.sif gtdbtk --help
+singularity exec ${prefix}.sif mdmcleaner --help
 singularity run-help ${prefix}.sif
 
 chown root ${prefix}.sif

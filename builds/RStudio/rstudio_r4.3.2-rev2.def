@@ -1,0 +1,62 @@
+Bootstrap: docker
+From: rocker/rstudio:4.3.2
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%post
+  # So we dont have to interactivly configure tzdata
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+
+  # Install essential packages
+  apt-get update && apt-get -y upgrade
+  apt-get -y install \
+    build-essential \
+    curl \
+    bzip2 \
+    ca-certificates \
+    git \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    libxml2 \
+    libxt6 \
+    zlib1g-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libpcre3-dev \
+    libicu-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libxml2-dev \
+    libglpk-dev
+  rm -rf /var/lib/apt/lists/*
+  apt-get clean
+
+%labels
+  Program RStudio-R_v4.3.2
+  ProgramVersion v4.3.2
+  ContainerVersion 2
+  Website https://github.com/rocker-org/rocker-versioned2
+
+%help
+
+###############################
+#### RStudio with R v4.3.2 ####
+###############################
+
+RStudio server running R v4.3.2
+
+
+COMMANDS:  
+  
+  Basic run examples:
+    singularity exec \
+      --bind run:/run,var-lib-rstudio-server:/var/lib/rstudio-server,database.conf:/etc/rstudio/database.conf \
+      rstudio_r4.3.2-rev2.sif /usr/lib/rstudio-server/bin/rserver \
+        --auth-none=0 --auth-pam-helper-path=pam-helper --server-user=$(whoami)
+
+

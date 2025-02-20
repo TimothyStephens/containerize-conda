@@ -1,0 +1,1886 @@
+createdb 7LG5_multimer.fa.msa/query.fas 7LG5_multimer.fa.msa/qdb --shuffle 0 
+
+MMseqs Version:       	15.6f452
+Database type         	0
+Shuffle input database	false
+Createdb mode         	0
+Write lookup file     	1
+Offset of numeric ids 	0
+Compressed            	0
+Verbosity             	3
+
+Converting sequences
+[
+Time for merging to qdb_h: 0h 0m 0s 0ms
+Time for merging to qdb: 0h 0m 0s 0ms
+Database type: Aminoacid
+Time for processing: 0h 0m 0s 10ms
+Create directory 7LG5_multimer.fa.msa/tmp
+search 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/res 7LG5_multimer.fa.msa/tmp --threads 48 --num-iterations 3 --db-load-mode 0 -a -e 0.1 --max-seqs 10000 --k-score 'seq:96,prof:80' 
+
+MMseqs Version:                        	15.6f452
+Substitution matrix                    	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace                          	true
+Alignment mode                         	2
+Alignment mode                         	0
+Allow wrapped scoring                  	false
+E-value threshold                      	0.1
+Seq. id. threshold                     	0
+Min alignment length                   	0
+Seq. id. mode                          	0
+Alternative alignments                 	0
+Coverage threshold                     	0
+Coverage mode                          	0
+Max sequence length                    	65535
+Compositional bias                     	1
+Compositional bias                     	1
+Max reject                             	2147483647
+Max accept                             	2147483647
+Include identical seq. id.             	false
+Preload mode                           	0
+Pseudo count a                         	substitution:1.100,context:1.400
+Pseudo count b                         	substitution:4.100,context:5.800
+Score bias                             	0
+Realign hits                           	false
+Realign score bias                     	-0.2
+Realign max seqs                       	2147483647
+Correlation score weight               	0
+Gap open cost                          	aa:11,nucl:5
+Gap extension cost                     	aa:1,nucl:2
+Zdrop                                  	40
+Threads                                	48
+Compressed                             	0
+Verbosity                              	3
+Seed substitution matrix               	aa:VTML80.out,nucl:nucleotide.out
+Sensitivity                            	5.7
+k-mer length                           	0
+Target search mode                     	0
+k-score                                	seq:2147483647,prof:2147483647
+Alphabet size                          	aa:21,nucl:5
+Max results per query                  	10000
+Split database                         	0
+Split mode                             	2
+Split memory limit                     	0
+Diagonal scoring                       	true
+Exact k-mer matching                   	0
+Mask residues                          	1
+Mask residues probability              	0.9
+Mask lower case residues               	0
+Minimum diagonal score                 	15
+Selected taxa                          	
+Spaced k-mers                          	1
+Spaced k-mer pattern                   	
+Local temporary path                   	
+Rescore mode                           	0
+Remove hits by seq. id. and coverage   	false
+Sort results                           	0
+Mask profile                           	1
+Profile E-value threshold              	0.1
+Global sequence weighting              	false
+Allow deletions                        	false
+Filter MSA                             	1
+Use filter only at N seqs              	0
+Maximum seq. id. threshold             	0.9
+Minimum seq. id.                       	0.0
+Minimum score per column               	-20
+Minimum coverage                       	0
+Select N most diverse seqs             	1000
+Pseudo count mode                      	0
+Min codons in orf                      	30
+Max codons in length                   	32734
+Max orf gaps                           	2147483647
+Contig start mode                      	2
+Contig end mode                        	2
+Orf start mode                         	1
+Forward frames                         	1,2,3
+Reverse frames                         	1,2,3
+Translation table                      	1
+Translate orf                          	0
+Use all table starts                   	false
+Offset of numeric ids                  	0
+Create lookup                          	0
+Add orf stop                           	false
+Overlap between sequences              	0
+Sequence split mode                    	1
+Header split mode                      	0
+Chain overlapping alignments           	0
+Merge query                            	1
+Search type                            	0
+Search iterations                      	3
+Start sensitivity                      	4
+Search steps                           	1
+Prefilter mode                         	0
+Exhaustive search mode                 	false
+Filter results during exhaustive search	0
+Strand selection                       	1
+LCA search mode                        	false
+Disk space limit                       	0
+MPI runner                             	
+Force restart with latest tmp          	false
+Remove temporary files                 	false
+
+prefilter 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Aminoacid
+Estimated memory consumption: 150G
+Target database size: 36293491 type: Aminoacid
+Index table k-mer threshold: 122 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 36.29M 1m 34s 324ms
+Index table: Masked residues: 342898260
+Index table: fill
+[=================================================================] 36.29M 1m 45s 924ms
+Index statistics
+Entries:          7781341201
+DB size:          54290 MB
+Avg k-mer size:   6.079173
+Top 10 k-mers
+    LAMHETP	17746
+    FLNSHRT	14675
+    GRDQVRG	10712
+    AYITSTG	10062
+    LLGPGKT	9661
+    LAGAHNN	8532
+    FGGSSYL	6941
+    HERPLIL	6299
+    ADSTRGG	6064
+    GDNDGDL	5933
+Time for index table init: 0h 3m 39s 700ms
+Process prefiltering step 1 of 1
+
+k-mer similarity threshold: 122
+Starting prefiltering scores calculation (step 1 of 1)
+Query db start 1 to 1
+Target db start 1 to 36293491
+[=================================================================] 1 0s 2ms
+
+2475.766780 k-mers per position
+16626593 DB matches per sequence
+0 overflows
+10000 sequences passed prefiltering per query sequence
+10000 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_0: 0h 0m 0s 0ms
+Time for processing: 0h 3m 51s 295ms
+align 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 1 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score only
+Query database size: 1 type: Aminoacid
+Target database size: 36293491 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 1ms
+Time for merging to aln_0: 0h 0m 0s 0ms
+10000 alignments calculated
+1135 sequence pairs passed the thresholds (0.113500 of overall calculated)
+1135.000000 hits per query sequence
+Time for processing: 0h 0m 3s 267ms
+result2profile 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -e 0.1 --mask-profile 1 --e-profile 0.1 --comp-bias-corr 1 --comp-bias-corr-scale 1 --wg 0 --allow-deletion 0 --filter-msa 1 --filter-min-enable 0 --max-seq-id 0.9 --qid '0.0' --qsc -20 --cov 0 --diff 1000 --pseudo-cnt-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --db-load-mode 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Aminoacid
+Target database size: 36293491 type: Aminoacid
+[=================================================================] 1 0s 3ms
+Time for merging to profile_0: 0h 0m 0s 0ms
+Time for processing: 0h 0m 2s 240ms
+prefilter 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Estimated memory consumption: 149G
+Target database size: 36293491 type: Aminoacid
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 36.29M 1m 27s 275ms
+Index table: Masked residues: 426912248
+Index table: fill
+[=================================================================] 36.29M 1m 38s 734ms
+Index statistics
+Entries:          7695820087
+DB size:          53801 MB
+Avg k-mer size:   6.012359
+Top 10 k-mers
+    LAMHETP	17723
+    FLNSHRT	14660
+    GRDQVRG	10710
+    AYITSTG	10048
+    LLGPGKT	9660
+    LAGAHNN	8531
+    FGGSSYL	6941
+    LNAEAAG	6419
+    HERPLIL	6294
+    GDNDGDL	5909
+Time for index table init: 0h 3m 25s 84ms
+Process prefiltering step 1 of 1
+
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 1 of 1)
+Query db start 1 to 1
+Target db start 1 to 36293491
+[=================================================================] 1 0s 1ms
+
+1461.618885 k-mers per position
+8072443 DB matches per sequence
+0 overflows
+10000 sequences passed prefiltering per query sequence
+10000 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_1: 0h 0m 0s 0ms
+Time for processing: 0h 3m 34s 703ms
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_1 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_1 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+Remove 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 ids from 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1
+[=================================================================] 1 0s 14ms
+Time for merging to pref_1: 0h 0m 0s 1ms
+Time for processing: 0h 0m 0s 108ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 
+
+Time for processing: 0h 0m 0s 0ms
+align 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 0 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 36293491 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 10ms
+Time for merging to aln_tmp_1: 0h 0m 0s 0ms
+8874 alignments calculated
+4471 sequence pairs passed the thresholds (0.503831 of overall calculated)
+4471.000000 hits per query sequence
+Time for processing: 0h 0m 7s 965ms
+mergedbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_1 
+
+Merging the results to 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1
+[=================================================================] 1 0s 0ms
+Time for merging to aln_1: 0h 0m 0s 0ms
+Time for processing: 0h 0m 0s 3ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_1 
+
+Time for processing: 0h 0m 0s 0ms
+result2profile 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -e 0.1 --mask-profile 1 --e-profile 0.1 --comp-bias-corr 1 --comp-bias-corr-scale 1 --wg 0 --allow-deletion 0 --filter-msa 1 --filter-min-enable 0 --max-seq-id 0.9 --qid '0.0' --qsc -20 --cov 0 --diff 1000 --pseudo-cnt-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --db-load-mode 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Target database size: 36293491 type: Aminoacid
+[=================================================================] 1 0s 10ms
+Time for merging to profile_1: 0h 0m 0s 0ms
+Time for processing: 0h 0m 3s 447ms
+prefilter 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Estimated memory consumption: 149G
+Target database size: 36293491 type: Aminoacid
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 36.29M 1m 31s 346ms
+Index table: Masked residues: 426912248
+Index table: fill
+[=================================================================] 36.29M 1m 34s 221ms
+Index statistics
+Entries:          7695820087
+DB size:          53801 MB
+Avg k-mer size:   6.012359
+Top 10 k-mers
+    LAMHETP	17723
+    FLNSHRT	14660
+    GRDQVRG	10710
+    AYITSTG	10048
+    LLGPGKT	9660
+    LAGAHNN	8531
+    FGGSSYL	6941
+    LNAEAAG	6419
+    HERPLIL	6294
+    GDNDGDL	5909
+Time for index table init: 0h 3m 23s 509ms
+Process prefiltering step 1 of 1
+
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 1 of 1)
+Query db start 1 to 1
+Target db start 1 to 36293491
+[=================================================================] 1 0s 1ms
+
+1082.351536 k-mers per position
+5498084 DB matches per sequence
+0 overflows
+10000 sequences passed prefiltering per query sequence
+10000 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_2: 0h 0m 0s 0ms
+Time for processing: 0h 3m 32s 597ms
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_2 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_2 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+Remove 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 ids from 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2
+[=================================================================] 1 0s 11ms
+Time for merging to pref_2: 0h 0m 0s 1ms
+Time for processing: 0h 0m 0s 79ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 
+
+Time for processing: 0h 0m 0s 0ms
+align 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_2 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_2 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 0 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 36293491 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 10ms
+Time for merging to aln_tmp_2: 0h 0m 0s 0ms
+4606 alignments calculated
+2479 sequence pairs passed the thresholds (0.538211 of overall calculated)
+2479.000000 hits per query sequence
+Time for processing: 0h 0m 3s 27ms
+mergedbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 7LG5_multimer.fa.msa/res 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_2 
+
+Merging the results to 7LG5_multimer.fa.msa/res
+[=================================================================] 1 0s 0ms
+Time for merging to res: 0h 0m 0s 0ms
+Time for processing: 0h 0m 0s 21ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_2 
+
+Time for processing: 0h 0m 0s 0ms
+mvdb 7LG5_multimer.fa.msa/tmp/latest/profile_1 7LG5_multimer.fa.msa/prof_res 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+lndb 7LG5_multimer.fa.msa/qdb_h 7LG5_multimer.fa.msa/prof_res_h 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+expandaln 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res /data/uniref30_2302_db_aln 7LG5_multimer.fa.msa/res_exp --db-load-mode 0 --threads 48 --expansion-mode 0 -e inf --expand-filter-clusters 1 --max-seq-id 0.95 
+
+MMseqs Version:           	15.6f452
+Expansion mode            	0
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Max sequence length       	65535
+Score bias                	0
+Compositional bias        	1
+Compositional bias        	1
+E-value threshold         	inf
+Seq. id. threshold        	0
+Coverage threshold        	0
+Coverage mode             	0
+Pseudo count mode         	0
+Pseudo count a            	substitution:1.100,context:1.400
+Pseudo count b            	substitution:4.100,context:5.800
+Expand filter clusters    	1
+Use filter only at N seqs 	0
+Maximum seq. id. threshold	0.95
+Minimum seq. id.          	0.0
+Minimum score per column  	-20
+Minimum coverage          	0
+Select N most diverse seqs	1000
+Preload mode              	0
+Compressed                	0
+Threads                   	48
+Verbosity                 	3
+
+[=================================================================] 1 0s 9ms
+Time for merging to res_exp: 0h 0m 0s 1ms
+Time for processing: 0h 9m 46s 191ms
+align 7LG5_multimer.fa.msa/prof_res /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res_exp 7LG5_multimer.fa.msa/res_exp_realign --db-load-mode 0 -e 10 --max-accept 100000 --threads 48 --alt-ali 10 -a 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace             	true
+Alignment mode            	0
+Alignment mode            	0
+Allow wrapped scoring     	false
+E-value threshold         	10
+Seq. id. threshold        	0
+Min alignment length      	0
+Seq. id. mode             	0
+Alternative alignments    	10
+Coverage threshold        	0
+Coverage mode             	0
+Max sequence length       	65535
+Compositional bias        	1
+Compositional bias        	1
+Max reject                	2147483647
+Max accept                	100000
+Include identical seq. id.	false
+Preload mode              	0
+Pseudo count a            	substitution:1.100,context:1.400
+Pseudo count b            	substitution:4.100,context:5.800
+Score bias                	0
+Realign hits              	false
+Realign score bias        	-0.2
+Realign max seqs          	2147483647
+Correlation score weight  	0
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Zdrop                     	40
+Threads                   	48
+Compressed                	0
+Verbosity                 	3
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 350950053 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 7ms
+Time for merging to res_exp_realign: 0h 0m 0s 0ms
+100170 alignments calculated
+100000 sequence pairs passed the thresholds (0.998303 of overall calculated)
+100000.000000 hits per query sequence
+Time for processing: 0h 1m 46s 776ms
+filterresult 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res_exp_realign 7LG5_multimer.fa.msa/res_exp_realign_filter --db-load-mode 0 --qid 0 --qsc 0.8 --diff 0 --threads 48 --max-seq-id 1.0 --filter-min-enable 100 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Compositional bias        	1
+Compositional bias        	1
+Allow deletions           	false
+Use filter only at N seqs 	100
+Maximum seq. id. threshold	1
+Minimum seq. id.          	0
+Minimum score per column  	0.8
+Minimum coverage          	0
+Select N most diverse seqs	0
+Preload mode              	0
+Threads                   	48
+Compressed                	0
+Include identical seq. id.	false
+Verbosity                 	3
+
+Query database size: 1 type: Aminoacid
+Target database size: 350950053 type: Aminoacid
+[=================================================================] 1 0s 3ms
+Time for merging to res_exp_realign_filter: 0h 0m 0s 0ms
+Time for processing: 0h 0m 25s 594ms
+result2msa 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res_exp_realign_filter 7LG5_multimer.fa.msa/uniref.a3m --msa-format-mode 6 --db-load-mode 0 --threads 48 --filter-msa 1 --filter-min-enable 1000 --diff 3000 --qid 0.0,0.2,0.4,0.6,0.8,1.0 --qsc 0 --max-seq-id 0.95 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Allow deletions           	false
+Compositional bias        	1
+Compositional bias        	1
+MSA format mode           	6
+Summary prefix            	cl
+Skip query                	false
+Filter MSA                	1
+Use filter only at N seqs 	1000
+Maximum seq. id. threshold	0.95
+Minimum seq. id.          	0.0,0.2,0.4,0.6,0.8,1.0
+Minimum score per column  	0
+Minimum coverage          	0
+Select N most diverse seqs	3000
+Preload mode              	0
+Threads                   	48
+Compressed                	0
+Verbosity                 	3
+
+Query database size: 1 type: Aminoacid
+Target database size: 350950053 type: Aminoacid
+[=================================================================] 1 0s 16ms
+Time for merging to uniref.a3m: 0h 0m 0s 0ms
+Time for processing: 0h 8m 24s 744ms
+rmdb 7LG5_multimer.fa.msa/res_exp_realign 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 1ms
+rmdb 7LG5_multimer.fa.msa/res_exp 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 2ms
+rmdb 7LG5_multimer.fa.msa/res 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res_exp_realign_filter 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+Create directory 7LG5_multimer.fa.msa/tmp3
+search 7LG5_multimer.fa.msa/prof_res /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/res_env 7LG5_multimer.fa.msa/tmp3 --threads 48 --num-iterations 3 --db-load-mode 0 -a -e 0.1 --max-seqs 10000 --k-score 'seq:96,prof:80' 
+
+MMseqs Version:                        	15.6f452
+Substitution matrix                    	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace                          	true
+Alignment mode                         	2
+Alignment mode                         	0
+Allow wrapped scoring                  	false
+E-value threshold                      	0.1
+Seq. id. threshold                     	0
+Min alignment length                   	0
+Seq. id. mode                          	0
+Alternative alignments                 	0
+Coverage threshold                     	0
+Coverage mode                          	0
+Max sequence length                    	65535
+Compositional bias                     	1
+Compositional bias                     	1
+Max reject                             	2147483647
+Max accept                             	2147483647
+Include identical seq. id.             	false
+Preload mode                           	0
+Pseudo count a                         	substitution:1.100,context:1.400
+Pseudo count b                         	substitution:4.100,context:5.800
+Score bias                             	0
+Realign hits                           	false
+Realign score bias                     	-0.2
+Realign max seqs                       	2147483647
+Correlation score weight               	0
+Gap open cost                          	aa:11,nucl:5
+Gap extension cost                     	aa:1,nucl:2
+Zdrop                                  	40
+Threads                                	48
+Compressed                             	0
+Verbosity                              	3
+Seed substitution matrix               	aa:VTML80.out,nucl:nucleotide.out
+Sensitivity                            	5.7
+k-mer length                           	0
+Target search mode                     	0
+k-score                                	seq:2147483647,prof:2147483647
+Alphabet size                          	aa:21,nucl:5
+Max results per query                  	10000
+Split database                         	0
+Split mode                             	2
+Split memory limit                     	0
+Diagonal scoring                       	true
+Exact k-mer matching                   	0
+Mask residues                          	1
+Mask residues probability              	0.9
+Mask lower case residues               	0
+Minimum diagonal score                 	15
+Selected taxa                          	
+Spaced k-mers                          	1
+Spaced k-mer pattern                   	
+Local temporary path                   	
+Rescore mode                           	0
+Remove hits by seq. id. and coverage   	false
+Sort results                           	0
+Mask profile                           	1
+Profile E-value threshold              	0.1
+Global sequence weighting              	false
+Allow deletions                        	false
+Filter MSA                             	1
+Use filter only at N seqs              	0
+Maximum seq. id. threshold             	0.9
+Minimum seq. id.                       	0.0
+Minimum score per column               	-20
+Minimum coverage                       	0
+Select N most diverse seqs             	1000
+Pseudo count mode                      	0
+Min codons in orf                      	30
+Max codons in length                   	32734
+Max orf gaps                           	2147483647
+Contig start mode                      	2
+Contig end mode                        	2
+Orf start mode                         	1
+Forward frames                         	1,2,3
+Reverse frames                         	1,2,3
+Translation table                      	1
+Translate orf                          	0
+Use all table starts                   	false
+Offset of numeric ids                  	0
+Create lookup                          	0
+Add orf stop                           	false
+Overlap between sequences              	0
+Sequence split mode                    	1
+Header split mode                      	0
+Chain overlapping alignments           	0
+Merge query                            	1
+Search type                            	0
+Search iterations                      	3
+Start sensitivity                      	4
+Search steps                           	1
+Prefilter mode                         	0
+Exhaustive search mode                 	false
+Filter results during exhaustive search	0
+Strand selection                       	1
+LCA search mode                        	false
+Disk space limit                       	0
+MPI runner                             	
+Force restart with latest tmp          	false
+Remove temporary files                 	false
+
+prefilter 7LG5_multimer.fa.msa/prof_res /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Target split mode. Searching through 3 splits
+Estimated memory consumption: 259G
+Target database size: 209335862 type: Aminoacid
+Process prefiltering step 1 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 69.05M 2m 8s 142ms
+Index table: Masked residues: 467986051
+Index table: fill
+[=================================================================] 69.05M 2m 40s 827ms
+Index statistics
+Entries:          11276963075
+DB size:          74292 MB
+Avg k-mer size:   8.810127
+Top 10 k-mers
+    RSETSQS	322353
+    TLPTTRS	236985
+    PPSLFTT	177976
+    VSTLRET	164514
+    DWSVCDL	141971
+    RPRTLYT	128796
+    RRPSTPY	120200
+    DTTEILS	110932
+    TSLSRLV	92396
+    FNTTTYT	88824
+Time for index table init: 0h 5m 12s 972ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 1 of 3)
+Query db start 1 to 1
+Target db start 1 to 69048635
+[=================================================================] 1 0s 1ms
+
+1082.351536 k-mers per position
+9601036 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_0_tmp_0: 0h 0m 0s 0ms
+Time for merging to pref_0_tmp_0_tmp: 0h 0m 0s 0ms
+Process prefiltering step 2 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 69.93M 2m 9s 961ms
+Index table: Masked residues: 468650872
+Index table: fill
+[=================================================================] 69.93M 2m 15s 821ms
+Index statistics
+Entries:          11264338173
+DB size:          74220 MB
+Avg k-mer size:   8.800264
+Top 10 k-mers
+    RSETSQS	336582
+    TLPTTRS	248496
+    PPSLFTT	186152
+    VSTLRET	180833
+    DWSVCDL	148926
+    RPRTLYT	134641
+    RRPSTPY	125910
+    DTTEILS	114727
+    LVSMCDR	99850
+    TSLSRLV	96218
+Time for index table init: 0h 4m 47s 34ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 2 of 3)
+Query db start 1 to 1
+Target db start 69048636 to 138978253
+[=================================================================] 1 0s 1ms
+
+1082.351536 k-mers per position
+9576243 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_0_tmp_1: 0h 0m 0s 0ms
+Time for merging to pref_0_tmp_1_tmp: 0h 0m 0s 0ms
+Process prefiltering step 3 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 70.36M 2m 9s 626ms
+Index table: Masked residues: 473915109
+Index table: fill
+[=================================================================] 70.36M 2m 38s 273ms
+Index statistics
+Entries:          11251058263
+DB size:          74144 MB
+Avg k-mer size:   8.789889
+Top 10 k-mers
+    RSETSQS	359818
+    TLPTTRS	263194
+    PPSLFTT	197110
+    VSTLRET	192804
+    DWSVCDL	159016
+    RPRTLYT	142920
+    RRPSTPY	133402
+    DTTEILS	122399
+    LVSMCDR	106866
+    TSLSRLV	102377
+Time for index table init: 0h 5m 12s 362ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 3 of 3)
+Query db start 1 to 1
+Target db start 138978254 to 209335862
+[=================================================================] 1 0s 1ms
+
+1082.351536 k-mers per position
+9555941 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_0_tmp_2: 0h 0m 0s 0ms
+Time for merging to pref_0_tmp_2_tmp: 0h 0m 0s 0ms
+Merging 3 target splits to pref_0
+Preparing offsets for merging: 0h 0m 0s 0ms
+[=================================================================] 1 0s 0ms
+Time for merging to pref_0: 0h 0m 0s 1ms
+Time for merging target splits: 0h 0m 0s 88ms
+Time for merging to pref_0_tmp: 0h 0m 0s 2ms
+Time for processing: 0h 16m 3s 641ms
+align 7LG5_multimer.fa.msa/prof_res /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_0 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 1 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score only
+Query database size: 1 type: Profile
+Target database size: 209335862 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 11ms
+Time for merging to aln_0: 0h 0m 0s 0ms
+10689 alignments calculated
+10689 sequence pairs passed the thresholds (1.000000 of overall calculated)
+10689.000000 hits per query sequence
+Time for processing: 0h 0m 25s 574ms
+result2profile 7LG5_multimer.fa.msa/prof_res /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_0 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -e 0.1 --mask-profile 1 --e-profile 0.1 --comp-bias-corr 1 --comp-bias-corr-scale 1 --wg 0 --allow-deletion 0 --filter-msa 1 --filter-min-enable 0 --max-seq-id 0.9 --qid '0.0' --qsc -20 --cov 0 --diff 1000 --pseudo-cnt-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --db-load-mode 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Target database size: 209335862 type: Aminoacid
+[=================================================================] 1 0s 9ms
+Time for merging to profile_0: 0h 0m 0s 0ms
+Time for processing: 0h 0m 17s 419ms
+prefilter 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_0 /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Target split mode. Searching through 3 splits
+Estimated memory consumption: 259G
+Target database size: 209335862 type: Aminoacid
+Process prefiltering step 1 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 69.05M 2m 17s 561ms
+Index table: Masked residues: 467986051
+Index table: fill
+[=================================================================] 69.05M 2m 17s 159ms
+Index statistics
+Entries:          11276963075
+DB size:          74292 MB
+Avg k-mer size:   8.810127
+Top 10 k-mers
+    RSETSQS	322353
+    TLPTTRS	236985
+    PPSLFTT	177976
+    VSTLRET	164514
+    DWSVCDL	141971
+    RPRTLYT	128796
+    RRPSTPY	120200
+    DTTEILS	110932
+    TSLSRLV	92396
+    FNTTTYT	88824
+Time for index table init: 0h 4m 58s 193ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 1 of 3)
+Query db start 1 to 1
+Target db start 1 to 69048635
+[=================================================================] 1 0s 2ms
+
+1179.171786 k-mers per position
+12317012 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_1_tmp_0: 0h 0m 0s 0ms
+Time for merging to pref_tmp_1_tmp_0_tmp: 0h 0m 0s 0ms
+Process prefiltering step 2 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 69.93M 2m 13s 949ms
+Index table: Masked residues: 468650872
+Index table: fill
+[=================================================================] 69.93M 2m 15s 968ms
+Index statistics
+Entries:          11264338173
+DB size:          74220 MB
+Avg k-mer size:   8.800264
+Top 10 k-mers
+    RSETSQS	336582
+    TLPTTRS	248496
+    PPSLFTT	186152
+    VSTLRET	180833
+    DWSVCDL	148926
+    RPRTLYT	134641
+    RRPSTPY	125910
+    DTTEILS	114727
+    LVSMCDR	99850
+    TSLSRLV	96218
+Time for index table init: 0h 4m 53s 472ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 2 of 3)
+Query db start 1 to 1
+Target db start 69048636 to 138978253
+[=================================================================] 1 0s 1ms
+
+1179.171786 k-mers per position
+12279494 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_1_tmp_1: 0h 0m 0s 0ms
+Time for merging to pref_tmp_1_tmp_1_tmp: 0h 0m 0s 0ms
+Process prefiltering step 3 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 70.36M 2m 13s 574ms
+Index table: Masked residues: 473915109
+Index table: fill
+[=================================================================] 70.36M 2m 21s 927ms
+Index statistics
+Entries:          11251058263
+DB size:          74144 MB
+Avg k-mer size:   8.789889
+Top 10 k-mers
+    RSETSQS	359818
+    TLPTTRS	263194
+    PPSLFTT	197110
+    VSTLRET	192804
+    DWSVCDL	159016
+    RPRTLYT	142920
+    RRPSTPY	133402
+    DTTEILS	122399
+    LVSMCDR	106866
+    TSLSRLV	102377
+Time for index table init: 0h 4m 57s 827ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 3 of 3)
+Query db start 1 to 1
+Target db start 138978254 to 209335862
+[=================================================================] 1 0s 1ms
+
+1179.171786 k-mers per position
+12259860 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_1_tmp_2: 0h 0m 0s 0ms
+Time for merging to pref_tmp_1_tmp_2_tmp: 0h 0m 0s 0ms
+Merging 3 target splits to pref_tmp_1
+Preparing offsets for merging: 0h 0m 0s 0ms
+[=================================================================] 1 0s 0ms
+Time for merging to pref_tmp_1: 0h 0m 0s 1ms
+Time for merging target splits: 0h 0m 0s 73ms
+Time for merging to pref_tmp_1_tmp: 0h 0m 0s 1ms
+Time for processing: 0h 15m 39s 886ms
+subtractdbs 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_0 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_1 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+subtractdbs 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_0 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_1 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+Remove 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_0 ids from 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_1
+[=================================================================] 1 0s 11ms
+Time for merging to pref_1: 0h 0m 0s 1ms
+Time for processing: 0h 0m 0s 89ms
+rmdb 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_1 
+
+Time for processing: 0h 0m 0s 0ms
+align 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_0 /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_tmp_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 0 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 209335862 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 9ms
+Time for merging to aln_tmp_1: 0h 0m 0s 0ms
+1844 alignments calculated
+1844 sequence pairs passed the thresholds (1.000000 of overall calculated)
+1844.000000 hits per query sequence
+Time for processing: 0h 0m 11s 781ms
+mergedbs 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_0 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_0 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_tmp_1 
+
+Merging the results to 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1
+[=================================================================] 1 0s 0ms
+Time for merging to aln_1: 0h 0m 0s 0ms
+Time for processing: 0h 0m 0s 2ms
+rmdb 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_0 
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_tmp_1 
+
+Time for processing: 0h 0m 0s 0ms
+result2profile 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_0 /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -e 0.1 --mask-profile 1 --e-profile 0.1 --comp-bias-corr 1 --comp-bias-corr-scale 1 --wg 0 --allow-deletion 0 --filter-msa 1 --filter-min-enable 0 --max-seq-id 0.9 --qid '0.0' --qsc -20 --cov 0 --diff 1000 --pseudo-cnt-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --db-load-mode 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Target database size: 209335862 type: Aminoacid
+[=================================================================] 1 0s 7ms
+Time for merging to profile_1: 0h 0m 0s 0ms
+Time for processing: 0h 0m 16s 343ms
+prefilter 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_1 /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_2 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Target split mode. Searching through 3 splits
+Estimated memory consumption: 259G
+Target database size: 209335862 type: Aminoacid
+Process prefiltering step 1 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 69.05M 2m 10s 351ms
+Index table: Masked residues: 467986051
+Index table: fill
+[=================================================================] 69.05M 2m 17s 483ms
+Index statistics
+Entries:          11276963075
+DB size:          74292 MB
+Avg k-mer size:   8.810127
+Top 10 k-mers
+    RSETSQS	322353
+    TLPTTRS	236985
+    PPSLFTT	177976
+    VSTLRET	164514
+    DWSVCDL	141971
+    RPRTLYT	128796
+    RRPSTPY	120200
+    DTTEILS	110932
+    TSLSRLV	92396
+    FNTTTYT	88824
+Time for index table init: 0h 4m 49s 88ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 1 of 3)
+Query db start 1 to 1
+Target db start 1 to 69048635
+[=================================================================] 1 0s 1ms
+
+1192.976109 k-mers per position
+12285942 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_2_tmp_0: 0h 0m 0s 0ms
+Time for merging to pref_tmp_2_tmp_0_tmp: 0h 0m 0s 0ms
+Process prefiltering step 2 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 69.93M 2m 10s 672ms
+Index table: Masked residues: 468650872
+Index table: fill
+[=================================================================] 69.93M 2m 13s 395ms
+Index statistics
+Entries:          11264338173
+DB size:          74220 MB
+Avg k-mer size:   8.800264
+Top 10 k-mers
+    RSETSQS	336582
+    TLPTTRS	248496
+    PPSLFTT	186152
+    VSTLRET	180833
+    DWSVCDL	148926
+    RPRTLYT	134641
+    RRPSTPY	125910
+    DTTEILS	114727
+    LVSMCDR	99850
+    TSLSRLV	96218
+Time for index table init: 0h 4m 45s 913ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 2 of 3)
+Query db start 1 to 1
+Target db start 69048636 to 138978253
+[=================================================================] 1 0s 1ms
+
+1192.976109 k-mers per position
+12252385 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_2_tmp_1: 0h 0m 0s 0ms
+Time for merging to pref_tmp_2_tmp_1_tmp: 0h 0m 0s 0ms
+Process prefiltering step 3 of 3
+
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 70.36M 2m 15s 301ms
+Index table: Masked residues: 473915109
+Index table: fill
+[=================================================================] 70.36M 2m 15s 759ms
+Index statistics
+Entries:          11251058263
+DB size:          74144 MB
+Avg k-mer size:   8.789889
+Top 10 k-mers
+    RSETSQS	359818
+    TLPTTRS	263194
+    PPSLFTT	197110
+    VSTLRET	192804
+    DWSVCDL	159016
+    RPRTLYT	142920
+    RRPSTPY	133402
+    DTTEILS	122399
+    LVSMCDR	106866
+    TSLSRLV	102377
+Time for index table init: 0h 4m 51s 651ms
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 3 of 3)
+Query db start 1 to 1
+Target db start 138978254 to 209335862
+[=================================================================] 1 0s 2ms
+
+1192.976109 k-mers per position
+12234522 DB matches per sequence
+0 overflows
+3563 sequences passed prefiltering per query sequence
+3563 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_2_tmp_2: 0h 0m 0s 0ms
+Time for merging to pref_tmp_2_tmp_2_tmp: 0h 0m 0s 0ms
+Merging 3 target splits to pref_tmp_2
+Preparing offsets for merging: 0h 0m 0s 0ms
+[=================================================================] 1 0s 0ms
+Time for merging to pref_tmp_2: 0h 0m 0s 1ms
+Time for merging target splits: 0h 0m 0s 65ms
+Time for merging to pref_tmp_2_tmp: 0h 0m 0s 2ms
+Time for processing: 0h 15m 10s 842ms
+subtractdbs 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_2 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_2 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+subtractdbs 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_2 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_2 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+Remove 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1 ids from 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_2
+[=================================================================] 1 0s 7ms
+Time for merging to pref_2: 0h 0m 0s 1ms
+Time for processing: 0h 0m 0s 86ms
+rmdb 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_tmp_2 
+
+Time for processing: 0h 0m 0s 0ms
+align 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_1 /data/colabfold_envdb_202108_db 7LG5_multimer.fa.msa/tmp3/12982781589933516808/pref_2 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_tmp_2 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 0 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 209335862 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 7ms
+Time for merging to aln_tmp_2: 0h 0m 0s 0ms
+1203 alignments calculated
+1203 sequence pairs passed the thresholds (1.000000 of overall calculated)
+1203.000000 hits per query sequence
+Time for processing: 0h 0m 12s 935ms
+mergedbs 7LG5_multimer.fa.msa/tmp3/12982781589933516808/profile_1 7LG5_multimer.fa.msa/res_env 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_tmp_2 
+
+Merging the results to 7LG5_multimer.fa.msa/res_env
+[=================================================================] 1 0s 0ms
+Time for merging to res_env: 0h 0m 0s 0ms
+Time for processing: 0h 0m 0s 4ms
+rmdb 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_1 
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/tmp3/12982781589933516808/aln_tmp_2 
+
+Time for processing: 0h 0m 0s 0ms
+expandaln 7LG5_multimer.fa.msa/prof_res /data/colabfold_envdb_202108_db_seq 7LG5_multimer.fa.msa/res_env /data/colabfold_envdb_202108_db_aln 7LG5_multimer.fa.msa/res_env_exp -e inf --expansion-mode 0 --db-load-mode 0 --threads 48 
+
+MMseqs Version:           	15.6f452
+Expansion mode            	0
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Max sequence length       	65535
+Score bias                	0
+Compositional bias        	1
+Compositional bias        	1
+E-value threshold         	inf
+Seq. id. threshold        	0
+Coverage threshold        	0
+Coverage mode             	0
+Pseudo count mode         	0
+Pseudo count a            	substitution:1.100,context:1.400
+Pseudo count b            	substitution:4.100,context:5.800
+Expand filter clusters    	0
+Use filter only at N seqs 	0
+Maximum seq. id. threshold	0.9
+Minimum seq. id.          	0.0
+Minimum score per column  	-20
+Minimum coverage          	0
+Select N most diverse seqs	1000
+Preload mode              	0
+Compressed                	0
+Threads                   	48
+Verbosity                 	3
+
+[=================================================================] 1 0s 183ms
+Time for merging to res_env_exp: 0h 0m 0s 1ms
+Time for processing: 0h 10m 21s 721ms
+align 7LG5_multimer.fa.msa/tmp3/latest/profile_1 /data/colabfold_envdb_202108_db_seq 7LG5_multimer.fa.msa/res_env_exp 7LG5_multimer.fa.msa/res_env_exp_realign --db-load-mode 0 -e 10 --max-accept 100000 --threads 48 --alt-ali 10 -a 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace             	true
+Alignment mode            	0
+Alignment mode            	0
+Allow wrapped scoring     	false
+E-value threshold         	10
+Seq. id. threshold        	0
+Min alignment length      	0
+Seq. id. mode             	0
+Alternative alignments    	10
+Coverage threshold        	0
+Coverage mode             	0
+Max sequence length       	65535
+Compositional bias        	1
+Compositional bias        	1
+Max reject                	2147483647
+Max accept                	100000
+Include identical seq. id.	false
+Preload mode              	0
+Pseudo count a            	substitution:1.100,context:1.400
+Pseudo count b            	substitution:4.100,context:5.800
+Score bias                	0
+Realign hits              	false
+Realign score bias        	-0.2
+Realign max seqs          	2147483647
+Correlation score weight  	0
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Zdrop                     	40
+Threads                   	48
+Compressed                	0
+Verbosity                 	3
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 738695581 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 10ms
+Time for merging to res_env_exp_realign: 0h 0m 0s 0ms
+114717 alignments calculated
+100000 sequence pairs passed the thresholds (0.871710 of overall calculated)
+100000.000000 hits per query sequence
+Time for processing: 0h 1m 33s 990ms
+filterresult 7LG5_multimer.fa.msa/qdb /data/colabfold_envdb_202108_db_seq 7LG5_multimer.fa.msa/res_env_exp_realign 7LG5_multimer.fa.msa/res_env_exp_realign_filter --db-load-mode 0 --qid 0 --qsc 0.8 --diff 0 --max-seq-id 1.0 --threads 48 --filter-min-enable 100 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Compositional bias        	1
+Compositional bias        	1
+Allow deletions           	false
+Use filter only at N seqs 	100
+Maximum seq. id. threshold	1
+Minimum seq. id.          	0
+Minimum score per column  	0.8
+Minimum coverage          	0
+Select N most diverse seqs	0
+Preload mode              	0
+Threads                   	48
+Compressed                	0
+Include identical seq. id.	false
+Verbosity                 	3
+
+Query database size: 1 type: Aminoacid
+Target database size: 738695581 type: Aminoacid
+[=================================================================] 1 0s 3ms
+Time for merging to res_env_exp_realign_filter: 0h 0m 0s 0ms
+Time for processing: 0h 0m 46s 184ms
+result2msa 7LG5_multimer.fa.msa/qdb /data/colabfold_envdb_202108_db_seq 7LG5_multimer.fa.msa/res_env_exp_realign_filter 7LG5_multimer.fa.msa/bfd.mgnify30.metaeuk30.smag30.a3m --msa-format-mode 6 --db-load-mode 0 --threads 48 --filter-msa 1 --filter-min-enable 1000 --diff 3000 --qid 0.0,0.2,0.4,0.6,0.8,1.0 --qsc 0 --max-seq-id 0.95 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Allow deletions           	false
+Compositional bias        	1
+Compositional bias        	1
+MSA format mode           	6
+Summary prefix            	cl
+Skip query                	false
+Filter MSA                	1
+Use filter only at N seqs 	1000
+Maximum seq. id. threshold	0.95
+Minimum seq. id.          	0.0,0.2,0.4,0.6,0.8,1.0
+Minimum score per column  	0
+Minimum coverage          	0
+Select N most diverse seqs	3000
+Preload mode              	0
+Threads                   	48
+Compressed                	0
+Verbosity                 	3
+
+Query database size: 1 type: Aminoacid
+Target database size: 738695581 type: Aminoacid
+[=================================================================] 1 0s 7ms
+Time for merging to bfd.mgnify30.metaeuk30.smag30.a3m: 0h 0m 0s 0ms
+Time for processing: 0h 5m 11s 880ms
+rmdb 7LG5_multimer.fa.msa/res_env_exp_realign_filter 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res_env_exp_realign 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 2ms
+rmdb 7LG5_multimer.fa.msa/res_env_exp 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 4ms
+rmdb 7LG5_multimer.fa.msa/res_env 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+mergedbs 7LG5_multimer.fa.msa/qdb 7LG5_multimer.fa.msa/final.a3m 7LG5_multimer.fa.msa/uniref.a3m 7LG5_multimer.fa.msa/bfd.mgnify30.metaeuk30.smag30.a3m 
+
+MMseqs Version:       	15.6f452
+Merge prefixes        	
+Stop merge after empty	false
+Compressed            	0
+Verbosity             	3
+
+Merging the results to 7LG5_multimer.fa.msa/final.a3m
+[=================================================================] 1 0s 0ms
+Time for merging to final.a3m: 0h 0m 0s 0ms
+Time for processing: 0h 0m 0s 67ms
+rmdb 7LG5_multimer.fa.msa/bfd.mgnify30.metaeuk30.smag30.a3m 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 2ms
+unpackdb 7LG5_multimer.fa.msa/final.a3m 7LG5_multimer.fa.msa --unpack-name-mode 0 --unpack-suffix .a3m 
+
+MMseqs Version: 	15.6f452
+Unpack name mode	0
+Unpack suffix   	.a3m
+Threads         	96
+Verbosity       	3
+
+[=================================================================] 1 0s 18ms
+Time for processing: 0h 0m 0s 45ms
+rmdb 7LG5_multimer.fa.msa/final.a3m 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 1ms
+rmdb 7LG5_multimer.fa.msa/uniref.a3m 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+Create directory 7LG5_multimer.fa.msa/tmp
+search 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/res 7LG5_multimer.fa.msa/tmp --threads 48 --num-iterations 3 --db-load-mode 0 -a -e 0.1 --max-seqs 10000 --k-score 'seq:96,prof:80' 
+
+MMseqs Version:                        	15.6f452
+Substitution matrix                    	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace                          	true
+Alignment mode                         	2
+Alignment mode                         	0
+Allow wrapped scoring                  	false
+E-value threshold                      	0.1
+Seq. id. threshold                     	0
+Min alignment length                   	0
+Seq. id. mode                          	0
+Alternative alignments                 	0
+Coverage threshold                     	0
+Coverage mode                          	0
+Max sequence length                    	65535
+Compositional bias                     	1
+Compositional bias                     	1
+Max reject                             	2147483647
+Max accept                             	2147483647
+Include identical seq. id.             	false
+Preload mode                           	0
+Pseudo count a                         	substitution:1.100,context:1.400
+Pseudo count b                         	substitution:4.100,context:5.800
+Score bias                             	0
+Realign hits                           	false
+Realign score bias                     	-0.2
+Realign max seqs                       	2147483647
+Correlation score weight               	0
+Gap open cost                          	aa:11,nucl:5
+Gap extension cost                     	aa:1,nucl:2
+Zdrop                                  	40
+Threads                                	48
+Compressed                             	0
+Verbosity                              	3
+Seed substitution matrix               	aa:VTML80.out,nucl:nucleotide.out
+Sensitivity                            	5.7
+k-mer length                           	0
+Target search mode                     	0
+k-score                                	seq:2147483647,prof:2147483647
+Alphabet size                          	aa:21,nucl:5
+Max results per query                  	10000
+Split database                         	0
+Split mode                             	2
+Split memory limit                     	0
+Diagonal scoring                       	true
+Exact k-mer matching                   	0
+Mask residues                          	1
+Mask residues probability              	0.9
+Mask lower case residues               	0
+Minimum diagonal score                 	15
+Selected taxa                          	
+Spaced k-mers                          	1
+Spaced k-mer pattern                   	
+Local temporary path                   	
+Rescore mode                           	0
+Remove hits by seq. id. and coverage   	false
+Sort results                           	0
+Mask profile                           	1
+Profile E-value threshold              	0.1
+Global sequence weighting              	false
+Allow deletions                        	false
+Filter MSA                             	1
+Use filter only at N seqs              	0
+Maximum seq. id. threshold             	0.9
+Minimum seq. id.                       	0.0
+Minimum score per column               	-20
+Minimum coverage                       	0
+Select N most diverse seqs             	1000
+Pseudo count mode                      	0
+Min codons in orf                      	30
+Max codons in length                   	32734
+Max orf gaps                           	2147483647
+Contig start mode                      	2
+Contig end mode                        	2
+Orf start mode                         	1
+Forward frames                         	1,2,3
+Reverse frames                         	1,2,3
+Translation table                      	1
+Translate orf                          	0
+Use all table starts                   	false
+Offset of numeric ids                  	0
+Create lookup                          	0
+Add orf stop                           	false
+Overlap between sequences              	0
+Sequence split mode                    	1
+Header split mode                      	0
+Chain overlapping alignments           	0
+Merge query                            	1
+Search type                            	0
+Search iterations                      	3
+Start sensitivity                      	4
+Search steps                           	1
+Prefilter mode                         	0
+Exhaustive search mode                 	false
+Filter results during exhaustive search	0
+Strand selection                       	1
+LCA search mode                        	false
+Disk space limit                       	0
+MPI runner                             	
+Force restart with latest tmp          	false
+Remove temporary files                 	false
+
+prefilter 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Aminoacid
+Estimated memory consumption: 150G
+Target database size: 36293491 type: Aminoacid
+Index table k-mer threshold: 122 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 36.29M 1m 35s 571ms
+Index table: Masked residues: 342898260
+Index table: fill
+[=================================================================] 36.29M 1m 42s 427ms
+Index statistics
+Entries:          7781341201
+DB size:          54290 MB
+Avg k-mer size:   6.079173
+Top 10 k-mers
+    LAMHETP	17746
+    FLNSHRT	14675
+    GRDQVRG	10712
+    AYITSTG	10062
+    LLGPGKT	9661
+    LAGAHNN	8532
+    FGGSSYL	6941
+    HERPLIL	6299
+    ADSTRGG	6064
+    GDNDGDL	5933
+Time for index table init: 0h 3m 36s 956ms
+Process prefiltering step 1 of 1
+
+k-mer similarity threshold: 122
+Starting prefiltering scores calculation (step 1 of 1)
+Query db start 1 to 1
+Target db start 1 to 36293491
+[=================================================================] 1 0s 1ms
+
+2475.766780 k-mers per position
+16626593 DB matches per sequence
+0 overflows
+10000 sequences passed prefiltering per query sequence
+10000 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_0: 0h 0m 0s 0ms
+Time for processing: 0h 3m 52s 241ms
+align 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 1 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score only
+Query database size: 1 type: Aminoacid
+Target database size: 36293491 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 1ms
+Time for merging to aln_0: 0h 0m 0s 0ms
+10000 alignments calculated
+1135 sequence pairs passed the thresholds (0.113500 of overall calculated)
+1135.000000 hits per query sequence
+Time for processing: 0h 0m 3s 109ms
+result2profile 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -e 0.1 --mask-profile 1 --e-profile 0.1 --comp-bias-corr 1 --comp-bias-corr-scale 1 --wg 0 --allow-deletion 0 --filter-msa 1 --filter-min-enable 0 --max-seq-id 0.9 --qid '0.0' --qsc -20 --cov 0 --diff 1000 --pseudo-cnt-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --db-load-mode 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Aminoacid
+Target database size: 36293491 type: Aminoacid
+[=================================================================] 1 0s 3ms
+Time for merging to profile_0: 0h 0m 0s 0ms
+Time for processing: 0h 0m 2s 66ms
+prefilter 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Estimated memory consumption: 149G
+Target database size: 36293491 type: Aminoacid
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 36.29M 1m 31s 618ms
+Index table: Masked residues: 426912248
+Index table: fill
+[=================================================================] 36.29M 1m 33s 381ms
+Index statistics
+Entries:          7695820087
+DB size:          53801 MB
+Avg k-mer size:   6.012359
+Top 10 k-mers
+    LAMHETP	17723
+    FLNSHRT	14660
+    GRDQVRG	10710
+    AYITSTG	10048
+    LLGPGKT	9660
+    LAGAHNN	8531
+    FGGSSYL	6941
+    LNAEAAG	6419
+    HERPLIL	6294
+    GDNDGDL	5909
+Time for index table init: 0h 3m 22s 436ms
+Process prefiltering step 1 of 1
+
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 1 of 1)
+Query db start 1 to 1
+Target db start 1 to 36293491
+[=================================================================] 1 0s 1ms
+
+1461.618885 k-mers per position
+8072443 DB matches per sequence
+0 overflows
+10000 sequences passed prefiltering per query sequence
+10000 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_1: 0h 0m 0s 0ms
+Time for processing: 0h 3m 31s 621ms
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_1 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_1 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+Remove 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 ids from 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1
+[=================================================================] 1 0s 8ms
+Time for merging to pref_1: 0h 0m 0s 1ms
+Time for processing: 0h 0m 0s 114ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_1 
+
+Time for processing: 0h 0m 0s 0ms
+align 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 0 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 36293491 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 7ms
+Time for merging to aln_tmp_1: 0h 0m 0s 0ms
+8874 alignments calculated
+4471 sequence pairs passed the thresholds (0.503831 of overall calculated)
+4471.000000 hits per query sequence
+Time for processing: 0h 0m 3s 337ms
+mergedbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_1 
+
+Merging the results to 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1
+[=================================================================] 1 0s 0ms
+Time for merging to aln_1: 0h 0m 0s 0ms
+Time for processing: 0h 0m 0s 1ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_0 
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_1 
+
+Time for processing: 0h 0m 0s 0ms
+result2profile 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_0 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -e 0.1 --mask-profile 1 --e-profile 0.1 --comp-bias-corr 1 --comp-bias-corr-scale 1 --wg 0 --allow-deletion 0 --filter-msa 1 --filter-min-enable 0 --max-seq-id 0.9 --qid '0.0' --qsc -20 --cov 0 --diff 1000 --pseudo-cnt-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --db-load-mode 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Target database size: 36293491 type: Aminoacid
+[=================================================================] 1 0s 8ms
+Time for merging to profile_1: 0h 0m 0s 0ms
+Time for processing: 0h 0m 3s 16ms
+prefilter 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' --seed-sub-mat 'aa:VTML80.out,nucl:nucleotide.out' -s 5.7 -k 0 --target-search-mode 0 --k-score seq:2147483647,prof:2147483647 --alph-size aa:21,nucl:5 --max-seq-len 65535 --max-seqs 10000 --split 0 --split-mode 2 --split-memory-limit 0 -c 0 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --diag-score 1 --exact-kmer-matching 0 --mask 1 --mask-prob 0.9 --mask-lower-case 0 --min-ungapped-score 15 --add-self-matches 0 --spaced-kmer-mode 1 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --threads 48 --compressed 0 -v 3 
+
+Query database size: 1 type: Profile
+Estimated memory consumption: 149G
+Target database size: 36293491 type: Aminoacid
+Index table k-mer threshold: 0 at k-mer size 7 
+Index table: counting k-mers
+[=================================================================] 36.29M 1m 31s 19ms
+Index table: Masked residues: 426912248
+Index table: fill
+[=================================================================] 36.29M 1m 35s 181ms
+Index statistics
+Entries:          7695820087
+DB size:          53801 MB
+Avg k-mer size:   6.012359
+Top 10 k-mers
+    LAMHETP	17723
+    FLNSHRT	14660
+    GRDQVRG	10710
+    AYITSTG	10048
+    LLGPGKT	9660
+    LAGAHNN	8531
+    FGGSSYL	6941
+    LNAEAAG	6419
+    HERPLIL	6294
+    GDNDGDL	5909
+Time for index table init: 0h 3m 23s 208ms
+Process prefiltering step 1 of 1
+
+k-mer similarity threshold: 110
+Starting prefiltering scores calculation (step 1 of 1)
+Query db start 1 to 1
+Target db start 1 to 36293491
+[=================================================================] 1 0s 1ms
+
+1082.351536 k-mers per position
+5498084 DB matches per sequence
+0 overflows
+10000 sequences passed prefiltering per query sequence
+10000 median result list length
+0 sequences with 0 size result lists
+Time for merging to pref_tmp_2: 0h 0m 0s 0ms
+Time for processing: 0h 3m 32s 564ms
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_2 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+subtractdbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_2 --threads 48 --e-profile 0.1 -e 0.1 --compressed 0 -v 3 
+
+Remove 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 ids from 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2
+[=================================================================] 1 0s 7ms
+Time for merging to pref_2: 0h 0m 0s 1ms
+Time for processing: 0h 0m 0s 79ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_tmp_2 
+
+Time for processing: 0h 0m 0s 0ms
+align 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 /data/uniref30_2302_db 7LG5_multimer.fa.msa/tmp/9231459282849767809/pref_2 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_2 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -a 1 --alignment-mode 2 --alignment-output-mode 0 --wrapped-scoring 0 -e 0.1 --min-seq-id 0 --min-aln-len 0 --seq-id-mode 0 --alt-ali 0 -c 0 --cov-mode 0 --max-seq-len 65535 --comp-bias-corr 1 --comp-bias-corr-scale 1 --max-rejected 2147483647 --max-accept 2147483647 --add-self-matches 0 --db-load-mode 0 --pca substitution:1.100,context:1.400 --pcb substitution:4.100,context:5.800 --score-bias 0 --realign 0 --realign-score-bias -0.2 --realign-max-seqs 2147483647 --corr-score-weight 0 --gap-open aa:11,nucl:5 --gap-extend aa:1,nucl:2 --zdrop 40 --threads 48 --compressed 0 -v 3 
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Profile
+Target database size: 36293491 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 7ms
+Time for merging to aln_tmp_2: 0h 0m 0s 0ms
+4606 alignments calculated
+2479 sequence pairs passed the thresholds (0.538211 of overall calculated)
+2479.000000 hits per query sequence
+Time for processing: 0h 0m 2s 687ms
+mergedbs 7LG5_multimer.fa.msa/tmp/9231459282849767809/profile_1 7LG5_multimer.fa.msa/res 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_2 
+
+Merging the results to 7LG5_multimer.fa.msa/res
+[=================================================================] 1 0s 0ms
+Time for merging to res: 0h 0m 0s 0ms
+Time for processing: 0h 0m 0s 3ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_1 
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/tmp/9231459282849767809/aln_tmp_2 
+
+Time for processing: 0h 0m 0s 0ms
+expandaln 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res /data/uniref30_2302_db_aln 7LG5_multimer.fa.msa/res_exp --db-load-mode 0 --threads 48 --expansion-mode 0 -e inf --expand-filter-clusters 0 --max-seq-id 0.95 
+
+MMseqs Version:           	15.6f452
+Expansion mode            	0
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Max sequence length       	65535
+Score bias                	0
+Compositional bias        	1
+Compositional bias        	1
+E-value threshold         	inf
+Seq. id. threshold        	0
+Coverage threshold        	0
+Coverage mode             	0
+Pseudo count mode         	0
+Pseudo count a            	substitution:1.100,context:1.400
+Pseudo count b            	substitution:4.100,context:5.800
+Expand filter clusters    	0
+Use filter only at N seqs 	0
+Maximum seq. id. threshold	0.95
+Minimum seq. id.          	0.0
+Minimum score per column  	-20
+Minimum coverage          	0
+Select N most diverse seqs	1000
+Preload mode              	0
+Compressed                	0
+Threads                   	48
+Verbosity                 	3
+
+[=================================================================] 1 0s 10ms
+Time for merging to res_exp: 0h 0m 0s 2ms
+Time for processing: 0h 10m 33s 22ms
+align 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res_exp 7LG5_multimer.fa.msa/res_exp_realign --db-load-mode 0 -e 0.001 --max-accept 1000000 --threads 48 -c 0.5 --cov-mode 1 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace             	false
+Alignment mode            	0
+Alignment mode            	0
+Allow wrapped scoring     	false
+E-value threshold         	0.001
+Seq. id. threshold        	0
+Min alignment length      	0
+Seq. id. mode             	0
+Alternative alignments    	0
+Coverage threshold        	0.5
+Coverage mode             	1
+Max sequence length       	65535
+Compositional bias        	1
+Compositional bias        	1
+Max reject                	2147483647
+Max accept                	1000000
+Include identical seq. id.	false
+Preload mode              	0
+Pseudo count a            	substitution:1.100,context:1.400
+Pseudo count b            	substitution:4.100,context:5.800
+Score bias                	0
+Realign hits              	false
+Realign score bias        	-0.2
+Realign max seqs          	2147483647
+Correlation score weight  	0
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Zdrop                     	40
+Threads                   	48
+Compressed                	0
+Verbosity                 	3
+
+Compute score and coverage
+Query database size: 1 type: Aminoacid
+Target database size: 350950053 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 0ms
+Time for merging to res_exp_realign: 0h 0m 0s 0ms
+1037981 alignments calculated
+127592 sequence pairs passed the thresholds (0.122923 of overall calculated)
+127592.000000 hits per query sequence
+Time for processing: 0h 3m 13s 401ms
+pairaln 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/res_exp_realign 7LG5_multimer.fa.msa/res_exp_realign_pair --db-load-mode 0 --pairing-mode 0 --pairing-dummy-mode 0 --threads 48 
+
+MMseqs Version:      	15.6f452
+Preload mode         	0
+Include dummy pairing	0
+Pairing mode         	0
+Compressed           	0
+Threads              	48
+Verbosity            	3
+
+[=================================================================] 1 0s 21ms
+Time for merging to res_exp_realign_pair: 0h 0m 0s 1ms
+Time for processing: 0h 1m 1s 225ms
+align 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res_exp_realign_pair 7LG5_multimer.fa.msa/res_exp_realign_pair_bt --db-load-mode 0 -e inf -a --threads 48 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace             	true
+Alignment mode            	0
+Alignment mode            	0
+Allow wrapped scoring     	false
+E-value threshold         	inf
+Seq. id. threshold        	0
+Min alignment length      	0
+Seq. id. mode             	0
+Alternative alignments    	0
+Coverage threshold        	0
+Coverage mode             	0
+Max sequence length       	65535
+Compositional bias        	1
+Compositional bias        	1
+Max reject                	2147483647
+Max accept                	2147483647
+Include identical seq. id.	false
+Preload mode              	0
+Pseudo count a            	substitution:1.100,context:1.400
+Pseudo count b            	substitution:4.100,context:5.800
+Score bias                	0
+Realign hits              	false
+Realign score bias        	-0.2
+Realign max seqs          	2147483647
+Correlation score weight  	0
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Zdrop                     	40
+Threads                   	48
+Compressed                	0
+Verbosity                 	3
+
+Compute score, coverage and sequence identity
+Query database size: 1 type: Aminoacid
+Target database size: 350950053 type: Aminoacid
+Calculation of alignments
+[=================================================================] 1 0s 1ms
+Time for merging to res_exp_realign_pair_bt: 0h 0m 0s 0ms
+0 alignments calculated
+0 sequence pairs passed the thresholds
+0.000000 hits per query sequence
+Time for processing: 0h 0m 23s 841ms
+pairaln 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db 7LG5_multimer.fa.msa/res_exp_realign_pair_bt 7LG5_multimer.fa.msa/res_final --db-load-mode 0 --pairing-mode 0 --pairing-dummy-mode 1 --threads 48 
+
+MMseqs Version:      	15.6f452
+Preload mode         	0
+Include dummy pairing	1
+Pairing mode         	0
+Compressed           	0
+Threads              	48
+Verbosity            	3
+
+[=================================================================] 1 0s 8ms
+Time for merging to res_final: 0h 0m 0s 3ms
+Time for processing: 0h 0m 22s 79ms
+result2msa 7LG5_multimer.fa.msa/qdb /data/uniref30_2302_db_seq 7LG5_multimer.fa.msa/res_final 7LG5_multimer.fa.msa/pair.a3m --db-load-mode 0 --msa-format-mode 5 --threads 48 
+
+MMseqs Version:           	15.6f452
+Substitution matrix       	aa:blosum62.out,nucl:nucleotide.out
+Gap open cost             	aa:11,nucl:5
+Gap extension cost        	aa:1,nucl:2
+Allow deletions           	false
+Compositional bias        	1
+Compositional bias        	1
+MSA format mode           	5
+Summary prefix            	cl
+Skip query                	false
+Filter MSA                	0
+Use filter only at N seqs 	0
+Maximum seq. id. threshold	0.9
+Minimum seq. id.          	0.0
+Minimum score per column  	-20
+Minimum coverage          	0
+Select N most diverse seqs	1000
+Preload mode              	0
+Threads                   	48
+Compressed                	0
+Verbosity                 	3
+
+Query database size: 1 type: Aminoacid
+Target database size: 350950053 type: Aminoacid
+[=================================================================] 1 0s 69ms
+Time for merging to pair.a3m: 0h 0m 0s 0ms
+Time for processing: 0h 6m 24s 680ms
+unpackdb 7LG5_multimer.fa.msa/pair.a3m 7LG5_multimer.fa.msa --unpack-name-mode 0 --unpack-suffix .paired.a3m 
+
+MMseqs Version: 	15.6f452
+Unpack name mode	0
+Unpack suffix   	.paired.a3m
+Threads         	96
+Verbosity       	3
+
+[=================================================================] 1 0s 19ms
+Time for processing: 0h 0m 0s 34ms
+rmdb 7LG5_multimer.fa.msa/qdb 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/qdb_h 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res_exp 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 2ms
+rmdb 7LG5_multimer.fa.msa/res_exp_realign 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res_exp_realign_pair 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res_exp_realign_pair_bt 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/res_final 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/pair.a3m 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/qdb 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms
+rmdb 7LG5_multimer.fa.msa/qdb_h 
+
+MMseqs Version:	15.6f452
+Verbosity	3
+
+Time for processing: 0h 0m 0s 0ms

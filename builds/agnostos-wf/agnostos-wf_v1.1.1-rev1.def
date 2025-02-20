@@ -1,0 +1,297 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+  filter_graph /usr/local/bin/
+  is_connected /usr/local/bin/
+  environment-categ_ref_new_domain_archit.yml /
+  environment-clu_annot.yml /
+  environment-cluster_category_stats.yml /
+  environment-cluster_pfam_domain_architectures.yml /
+  environment-creation_output_tables.yml /
+  environment-functional_validation.yml /
+  environment-get_stats.yml /
+  environment-main.txt /
+  environment-output_tables.yml /
+  environment-report_maker.yml /
+  environment-shadow_orfs.yml /
+  environment-validation_summary.yml /
+  environment-cluster_communities_inference.yml /
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%post
+  # So we dont have to interactivly configure tzdata 
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Install essential packages
+  apt-get update && apt-get -y upgrade
+  apt-get -y install \
+    build-essential \
+    cmake \
+    xxd \
+    git \
+    zlib1g-dev \
+    libbz2-dev \
+    libxml2-dev \
+    libatomic1 \
+    openmpi-bin \
+    libopenmpi-dev \
+    wget \
+    rsync \
+    ssh \
+    tar \
+    curl \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    bc \
+    gawk
+  rm -rf /var/lib/apt/lists/*
+  apt-get clean
+  
+  NCPUS=24
+  
+  # Installing Mambaforge
+  wget -qnc https://github.com/conda-forge/miniforge/releases/download/23.11.0-0/Mambaforge-Linux-x86_64.sh
+  bash Mambaforge-Linux-x86_64.sh -bfp /usr/local
+  rm -f Mambaforge-Linux-x86_64.sh
+  mamba config --set auto_update_conda false
+  mamba clean -afy
+  chmod +x /usr/local/etc/profile.d/conda.sh
+  echo ". /usr/local/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+  
+  ## Install packages manually
+  mkdir -p /opt/src
+  
+  # MMSEQS
+  cd /opt/src
+  git clone https://github.com/soedinglab/MMseqs2.git
+  cd MMseqs2
+  git checkout 9cc89aa594131293b8bc2e7a121e2ed412f0b931
+  mkdir build
+  cd build
+  cmake -DHAVE_MPI=1 -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/opt/mmseqs2 ..
+  make -j $NCPUS
+  make install
+  
+  # HMMER
+  cd /opt/src
+  wget http://eddylab.org/software/hmmer/hmmer-3.3.tar.gz
+  tar zxf hmmer-3.3.tar.gz
+  rm hmmer-3.3.tar.gz
+  cd hmmer-3.3
+  ./configure --prefix=/opt/hmmer --enable-mpi
+  make -j $NCPUS
+  make check
+  make install
+  
+  # FAMSA
+  cd /opt/src
+  mkdir -p /opt/famsa/bin/
+  wget https://github.com/refresh-bio/FAMSA/releases/download/v1.2.1/famsa-1.2.1-linux -O /opt/famsa/bin/famsa
+  chmod +x /opt/famsa/bin/famsa
+  
+  # OD-Seq
+  cd /opt/src
+  wget http://www.bioinf.ucd.ie/download/od-seq.tar.gz
+  tar -zxf od-seq.tar.gz
+  rm od-seq.tar.gz
+  cd OD-Seq/
+  mkdir -p /opt/OD-Seq/bin
+  g++ -fopenmp -o /opt/OD-Seq/bin/OD-seq AliReader.cpp Bootstrap.cpp DistCalc.cpp DistMatReader.cpp DistWriter.cpp FastaWriter.cpp IQR.cpp ODseq.cpp PairwiseAl.cpp Protein.cpp ResultWriter.cpp runtimeargs.cpp util.cpp
+  
+  # hh-suite
+  cd /opt/src
+  git clone https://github.com/soedinglab/hh-suite
+  cd hh-suite
+  git submodule init
+  git submodule update
+  mkdir build
+  cd build
+  cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/hh-suite ..
+  make -j $NCPUS
+  make install
+  
+  # ffindex
+  cd /opt/src
+  git clone https://github.com/soedinglab/ffindex_soedinglab
+  cd ffindex_soedinglab
+  cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/ffindex .
+  make -j $NCPUS
+  make install
+  
+  # Kaiju
+  cd /opt/src
+  git clone https://github.com/bioinformatics-centre/kaiju.git
+  cd kaiju/src
+  make -j $NCPUS
+  cd ../
+  mkdir -p /opt/kaiju/bin/
+  cp bin/* /opt/kaiju/bin/
+  
+  # Parasail
+  cd /opt/src
+  git clone https://github.com/jeffdaily/parasail
+  cd parasail
+  sed -i "s|int matches = parasail_result_get_matches(result);|int matches = parasail_result_get_similar(result);|" apps/parasail_aligner.cpp
+  autoreconf -fi
+  ./configure --prefix=$PWD
+  make -j $NCPUS
+  make install
+  mkdir -p /opt/parasail/bin/
+  cp bin/* /opt/parasail/bin/
+  echo "LD_LIBRARY_PATH=$PWD/lib:${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> $SINGULARITY_ENVIRONMENT
+  
+  # Add to PATH before running conda
+  export PATH=/opt/mmseqs2/bin:/opt/hmmer/bin:/opt/famsa/bin:/opt/OD-Seq/bin:/opt/hh-suite/bin:/opt/hh-suite/scripts:/opt/hh-suite/data:/opt/ffindex/bin:/opt/kaiju/bin/:/opt/parasail/bin/:$PATH
+  
+  
+  
+  # Install extra packages using mamba
+  mamba install -y \
+    -c anaconda \
+    -c conda-forge \
+    -c bioconda \
+    -c intel \
+    -c biocore \
+    -c ostrokach-forge \
+    -c r \
+    --file /environment-main.txt
+  . /usr/local/etc/profile.d/conda.sh
+  echo "export R_LIBS=/usr/local/lib/R/library" >> "/usr/local/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "/usr/local/etc/conda/deactivate.d/env_vars.sh"
+  
+  # setup conda env for each R script separatly
+  mamba env create -f /environment-categ_ref_new_domain_archit.yml
+  conda activate categ_ref_new_domain_archit
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  
+  mamba env create -f /environment-clu_annot.yml
+  conda activate clu_annot
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  
+  mamba env create -f /environment-cluster_category_stats.yml
+  conda activate cluster_category_stats
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  export R_LIBS=$CONDA_PREFIX/lib/R/library
+  R -e 'BiocManager::install("parallel")'
+  
+  mamba env create -f /environment-cluster_pfam_domain_architectures.yml
+  conda activate cluster_pfam_domain_architectures
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  export R_LIBS=$CONDA_PREFIX/lib/R/library
+  R -e 'BiocManager::install("parallel")'
+  
+  mamba env create -f /environment-creation_output_tables.yml
+  conda activate creation_output_tables
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  
+  mamba env create -f /environment-functional_validation.yml
+  conda activate functional_validation
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  export R_LIBS=$CONDA_PREFIX/lib/R/library
+  R -e 'BiocManager::install("parallel")'
+  R -e 'BiocManager::install("textreuse")'
+  
+  mamba env create -f /environment-get_stats.yml
+  # Need to remove otherwise this files cause a bash vs. sh error that kills the build process.
+  rm /usr/local/envs/get_stats/etc/conda/activate.d/activate-binutils_linux-64.sh \
+     /usr/local/envs/get_stats/etc/conda/activate.d/activate-gcc_linux-64.sh \
+     /usr/local/envs/get_stats/etc/conda/activate.d/activate-gfortran_linux-64.sh \
+     /usr/local/envs/get_stats/etc/conda/activate.d/activate-gxx_linux-64.sh \
+     /usr/local/envs/get_stats/etc/conda/deactivate.d/deactivate-binutils_linux-64.sh \
+     /usr/local/envs/get_stats/etc/conda/deactivate.d/deactivate-gcc_linux-64.sh \
+     /usr/local/envs/get_stats/etc/conda/deactivate.d/deactivate-gfortran_linux-64.sh \
+     /usr/local/envs/get_stats/etc/conda/deactivate.d/deactivate-gxx_linux-64.sh
+  conda activate get_stats
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  
+  mamba env create -f /environment-output_tables.yml
+  conda activate output_tables
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  
+  mamba env create -f /environment-report_maker.yml
+  conda activate report_maker
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  
+  mamba env create -f /environment-shadow_orfs.yml
+  conda activate shadow_orfs
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  export R_LIBS=$CONDA_PREFIX/lib/R/library
+  R -e 'BiocManager::install("parallel")'
+  R -e 'BiocManager::install("textreuse")'
+  
+  mamba env create -f /environment-validation_summary.yml
+  conda activate validation_summary
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  
+  mamba env create -f /environment-cluster_communities_inference.yml
+  conda activate cluster_communities_inference
+  echo "export R_LIBS=$CONDA_PREFIX/lib/R/library" >> "$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh"
+  echo "unset R_LIBS" >> "$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh"
+  export R_LIBS=$CONDA_PREFIX/lib/R/library
+  R -e 'BiocManager::install("parallel")'
+  R -e 'install.packages("unixtools",,"http://rforge.net/",type="source")'
+  
+  rm /usr/local/envs/*/etc/conda/activate.d/activate-binutils_linux-64.sh \
+     /usr/local/envs/*/etc/conda/activate.d/activate-gcc_linux-64.sh \
+     /usr/local/envs/*/etc/conda/activate.d/activate-gfortran_linux-64.sh \
+     /usr/local/envs/*/etc/conda/activate.d/activate-gxx_linux-64.sh \
+     /usr/local/envs/*/etc/conda/deactivate.d/deactivate-binutils_linux-64.sh \
+     /usr/local/envs/*/etc/conda/deactivate.d/deactivate-gcc_linux-64.sh \
+     /usr/local/envs/*/etc/conda/deactivate.d/deactivate-gfortran_linux-64.sh \
+     /usr/local/envs/*/etc/conda/deactivate.d/deactivate-gxx_linux-64.sh
+  
+  rm /environment-*.yml /environment-*.txt
+  mamba clean -afy
+  
+  # Add everything to PATH
+  echo "export PATH=/opt/mmseqs2/bin:/opt/hmmer/bin:/opt/famsa/bin:/opt/OD-Seq/bin:/opt/hh-suite/bin:/opt/hh-suite/scripts:/opt/hh-suite/data:/opt/ffindex/bin:/opt/kaiju/bin/:/opt/parasail/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/envs/main/bin:$PATH" >> $SINGULARITY_ENVIRONMENT
+
+
+%labels
+  Program AGNOSTOS-wf
+  ProgramVersion v1.1.1
+  ContainerVersion 1
+  Website https://github.com/functional-dark-side/agnostos-wf
+
+%help
+
+############################
+#### AGNOSTOS-wf v1.1.1 ####
+############################
+
+AGNOSTOS is the computational interpretation of our conceptual framework. It relies on extensive quality control of the inferred gene clusters and remote homology methods to dive into the twilight zone of sequence similarity.
+
+This image captures all 3rd party tools used by AGNOSTOS-wf and is designed to make setting up and running the workflow easier (including filter_graph and is_connected which are built from iGraph).
+
+COMMANDS:
+  
+  Print help message:
+    singularity exec agnostos-wf_v1.1.1-rev1.sif mmseqs --help
+  
+  Basic run examples:
+    singularity exec agnostos-wf_v1.1.1-rev1.sif mmseqs XXXX
+    singularity exec agnostos-wf_v1.1.1-rev1.sif filter_graph XXXX
+    singularity exec agnostos-wf_v1.1.1-rev1.sif is_connected XXXX
+    singularity exec agnostos-wf_v1.1.1-rev1.sif XXXXXXX
+
+

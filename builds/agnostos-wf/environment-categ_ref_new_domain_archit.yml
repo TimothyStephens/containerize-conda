@@ -1,0 +1,14 @@
+name: categ_ref_new_domain_archit
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base=3.6.3
+  - r-data.table
+  - r-stringr
+  - r-tidyverse

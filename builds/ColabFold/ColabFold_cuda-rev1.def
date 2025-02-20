@@ -1,0 +1,83 @@
+Bootstrap: docker
+From: nvidia/cuda:{{CUDA_VERSION}}-base-ubuntu22.04
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+  export PATH="/opt/conda/envs/colabfold/bin:$PATH"
+  export MPLBACKEND=Agg
+  export MPLCONFIGDIR=/cache
+  export XDG_CACHE_HOME=/cache
+
+%post
+  # So we dont have to interactivly configure tzdata
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Create /cache for Alphafold run
+  mkdir -p /cache
+  
+  # Install essential packages
+  apt-get update
+  apt-get install -y wget cuda-nvcc-$(echo {{CUDA_VERSION}} | cut -d'.' -f1,2 | tr '.' '-') --no-install-recommends --no-install-suggests
+  rm -rf /var/lib/apt/lists/*
+  
+  # Installing Mambaforge
+  wget -qnc https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
+  bash Mambaforge-Linux-x86_64.sh -bfp /usr/local
+  rm -f Mambaforge-Linux-x86_64.sh
+  mamba config --set auto_update_conda false
+  mamba clean -afy
+  chmod +x /usr/local/etc/profile.d/conda.sh
+  echo ". /usr/local/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+  echo "conda activate /usr/local/envs/colabfold" >> $SINGULARITY_ENVIRONMENT
+  
+  # Install ColabFold
+  CONDA_OVERRIDE_CUDA=$(echo {{CUDA_VERSION}} | cut -d'.' -f1,2) mamba create -y -n colabfold -c conda-forge -c bioconda colabfold={{COLABFOLD_VERSION}} jaxlib==*=cuda*
+  pip install --upgrade "jax[cuda11_pip]==0.4.23" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+  
+  # Fix some options in ColabFold
+  COLABFOLDDIR=/usr/local/envs/colabfold/lib/python3.10/site-packages/colabfold
+  # Use 'Agg' for non-GUI backend
+  sed -i -e "s#from matplotlib import pyplot as plt#import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt#g" $COLABFOLDDIR/plot.py
+  # modify the default params directory
+  sed -i -e "s#appdirs.user_cache_dir(__package__ or \"colabfold\")#\"${COLABFOLDDIR}\"#g" $COLABFOLDDIR/download.py
+  # suppress warnings related to tensorflow
+  sed -i -e "s#from io import StringIO#from io import StringIO\nfrom silence_tensorflow import silence_tensorflow\nsilence_tensorflow()#g" $COLABFOLDDIR/batch.py
+  
+  # Download params
+  . /usr/local/etc/profile.d/conda.sh
+  conda activate /usr/local/envs/colabfold
+  pip install silence-tensorflow
+  python -m colabfold.download
+
+%labels
+  Program ColabFold
+  ProgramVersion v{{COLABFOLD_VERSION}}-cuda{{CUDA_VERSION}}
+  ContainerVersion 1
+  Website https://github.com/sokrypton/ColabFold
+
+%help
+
+#######################################
+#### ColabFold v${{COLABFOLD_VERSION}} cuda v{{CUDA_VERSION}} ####
+#######################################
+
+Local implementation of ColabFold v{{COLABFOLD_VERSION}}: AlphaFold2 using MMseqs2
+Easy to use protein structure and complex prediction using AlphaFold2 and Alphafold2-multimer. Sequence alignments/templates are generated through MMseqs2 and HHsearch.
+ColabFold offers accelerated prediction of protein structures and complexes by combining the fast homology search of MMseqs2 with AlphaFold2 or RoseTTAFold. ColabFold’s 40−60-fold faster search and optimized model utilization enables prediction of close to 1,000 structures per day on a server with one graphics processing unit.
+
+
+
+COMMANDS:
+  
+  Print help message:
+    singularity exec ColabFold_v${COLABFOLD_VERSION}_cuda_v{{CUDA_VERSION}}-rev{{REVISION}}.sif colabfold_search --help
+  
+  Basic run examples:
+    # The "/scratch/databases/ColabFold/20240220" option is required and should not be changed appropriately.
+    # "protein.fa" should be set to your target protein file.
+    singularity exec ColabFold_v{{COLABFOLD_VERSION}}_cuda_v{{CUDA_VERSION}}-rev{{REVISION}}.sif colabfold_search protein.fa /scratch/databases/ColabFold/20240220 msas
+    singularity exec ColabFold_v{{COLABFOLD_VERSION}}_cuda_v{{CUDA_VERSION}}-rev{{REVISION}}.sif colabfold_batch msas predictions
+
+

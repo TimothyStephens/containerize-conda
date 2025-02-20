@@ -1,0 +1,16 @@
+name: creation_output_tables
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base
+  - r-data.table
+  - r-maditr
+  - r-optparse
+  - r-tidyverse
+  - r-r.utils

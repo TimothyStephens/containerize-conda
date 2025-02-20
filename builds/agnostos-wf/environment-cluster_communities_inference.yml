@@ -1,0 +1,28 @@
+name: cluster_communities_inference
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+  - intel
+  - biocore
+  - ostrokach-forge
+  - r
+dependencies:
+  - r-base
+  - r-igraph
+  - r-tidyverse
+  - r-pbmcapply
+  - r-maditr
+  - r-data.table
+  - r-tidygraph
+  - r-bigreadr
+  - r-stringi
+  - r-foreach
+  - r-doSNOW
+  - r-itertools
+  - r-reshape2
+  - r-optparse
+  - r-config
+  - r-r.utils
+  - r-stringdist
+  - r-biocmanager

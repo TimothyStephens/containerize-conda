@@ -1,0 +1,14 @@
+eggnog-mapper
+parallel
+bbmap
+prodigal
+seqtk
+seqkit
+datamash
+snakemake
+coreutils
+ripgrep
+mcl
+pandoc
+vmtouch
+aria2

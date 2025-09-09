@@ -35,7 +35,7 @@ From: ubuntu:20.04
     && rm signalp-4.1g.Linux.tar.gz \
     && chown -R root:root signalp-4.1 \
     && chmod -R 755 signalp-4.1 \
-    && sed -i -e 's@/usr/opt/www/pub/CBS/services/SignalP-4.1/signalp-4.1@/usr/lib/signalp-4.1@' signalp-4.1/signalp \
+    && sed -i -e 's@/usr/opt/www/pub/CBS/services/SignalP-4.1/signalp-4.1@/usr/lib/signalp-4.1@' -e 's@MAX_ALLOWED_ENTRIES=20000@MAX_ALLOWED_ENTRIES=2000000000@' signalp-4.1/signalp \
     && cp signalp-4.1/signalp /usr/bin/signalp
   
   # Installing Mambaforge

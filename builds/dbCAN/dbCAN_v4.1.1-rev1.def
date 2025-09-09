@@ -1,0 +1,86 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+  signalp-4.1g.Linux.tar.gz /usr/lib/
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+
+%post
+  # So we dont have to interactivly configure tzdata 
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Install essential packages
+  apt-get update && apt-get -y upgrade
+  apt-get -y install \
+    build-essential \
+    curl \
+    bzip2 \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    git \
+    wget
+  rm -rf /var/lib/apt/lists/*
+  apt-get clean
+  
+  # Install signalP
+  cd /usr/lib \
+    && tar -zxvf signalp-4.1g.Linux.tar.gz \
+    && rm signalp-4.1g.Linux.tar.gz \
+    && chown -R root:root signalp-4.1 \
+    && chmod -R 755 signalp-4.1 \
+    && sed -i -e 's@/usr/opt/www/pub/CBS/services/SignalP-4.1/signalp-4.1@/usr/lib/signalp-4.1@' signalp-4.1/signalp \
+    && cp signalp-4.1/signalp /usr/bin/signalp
+  
+  # Installing Mambaforge
+  wget -qnc https://github.com/conda-forge/miniforge/releases/download/23.11.0-0/Mambaforge-Linux-x86_64.sh
+  bash Mambaforge-Linux-x86_64.sh -bfp /usr/local
+  rm -f Mambaforge-Linux-x86_64.sh
+  mamba config --set auto_update_conda false
+  mamba clean -afy
+  chmod +x /usr/local/etc/profile.d/conda.sh
+  echo ". /usr/local/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+  echo "conda activate /usr/local/envs/dbcan" >> $SINGULARITY_ENVIRONMENT
+  
+  # Install package
+  mamba create --name dbcan -c conda-forge -c bioconda python=3.8 dbcan
+  
+  # Download database
+  . /usr/local/etc/profile.d/conda.sh
+  conda activate /usr/local/envs/dbcan
+  dbcan_build --cpus 8 --db-dir /db --clean
+
+%labels
+  Program dbCAN
+  ProgramVersion v4.1.1
+  ContainerVersion 1
+  Website https://github.com/linnabrown/run_dbcan
+
+%help
+
+######################
+#### dbCAN v4.1.1 ####
+######################
+
+Run_dbcan V4 (including SignalP v4.1), using genomes/metagenomes/proteomes of any assembled organisms (prokaryotes, fungi, plants, animals, viruses) to search for CAZymes.
+
+NOTE:
+  - The dbcan database is included with this container in `/db`. To use this database include `--db_dir /db` in your command.
+  - SignalP v4.1 is included in this container. To run dbcan with signalP include `--use_signalP=TRUE` in your command.
+
+
+COMMANDS:  
+  
+  Print help message:
+    singularity exec dbCAN_v4.1.1-rev1.sif run_dbcan -h
+  
+  Basic run examples:
+    singularity exec dbCAN_v4.1.1-rev1.sif run_dbcan seq.fa prok --out_dir seq.fa.dbcan --dia_cpu 8 --hmm_cpu 8 --db_dir /db --use_signalP=TRUE 
+
+

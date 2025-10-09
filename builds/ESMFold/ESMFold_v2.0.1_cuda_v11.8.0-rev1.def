@@ -1,0 +1,148 @@
+Bootstrap: docker
+From: nvidia/cuda:{{CUDA_VERSION}}-cudnn8-devel-ubuntu22.04
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+  export PATH="/opt/conda/envs/ESMFold/bin:$PATH"
+  export MPLBACKEND=Agg
+  export MPLCONFIGDIR=/cache
+  export XDG_CACHE_HOME=/cache
+
+%post
+  # So we dont have to interactivly configure tzdata
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Create /cache for Alphafold run
+  mkdir -p /cache
+  
+  # Install essential packages
+  apt-get update
+  apt-get -y install build-essential coreutils
+  apt-get -y install wget bzip2 git g++ gfortran libreadline6-dev libncurses5-dev xorg-dev libpng-dev libbz2-dev liblzma-dev libpcre3-dev make libcairo2-dev libgtk2.0-dev libcurl4-openssl-dev
+  apt-get -y install libxml2 libxml2-dev libjpeg-dev
+  apt-get -y install locales libnetcdf-dev
+  apt-get -y install language-pack-en language-pack-en-base 
+  apt-get -y install git curl unzip bc tabix
+  apt-get -y install libssl-dev libgit2-dev libssh2-1-dev
+  apt-get -y install python3 gcc zip python3-dev 
+  apt-get -y install zlib1g zlib1g-dev libbz2-dev liblzma-dev pigz libncurses5-dev
+  apt-get -y install libreadline-dev cmake vim
+  apt-get -y install libc6-dev
+  apt-get clean
+  locale-gen "en_US.UTF-8"
+  rm -rf /var/lib/apt/lists/*
+  
+  # Installing Mambaforge
+  wget -qnc https://github.com/conda-forge/miniforge/releases/download/23.11.0-0/Mambaforge-Linux-x86_64.sh
+  bash Mambaforge-Linux-x86_64.sh -bfp /usr/local
+  rm -f Mambaforge-Linux-x86_64.sh
+  mamba config --set auto_update_conda false
+  mamba clean -afy
+  chmod +x /usr/local/etc/profile.d/conda.sh
+  echo ". /usr/local/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+  echo "conda activate /usr/local/envs/ESMFold" >> $SINGULARITY_ENVIRONMENT
+  
+  # Install ESMFold
+  mamba create -y -n ESMFold \
+    conda-forge::python=3.7 \
+    conda-forge::setuptools=59.5.0 \
+    conda-forge::pip \
+    conda-forge::openmm=7.5.1 \
+    conda-forge::pdbfixer \
+    conda-forge::cudatoolkit==11.3.* \
+    conda-forge::einops \
+    conda-forge::fairscale \
+    conda-forge::omegaconf \
+    conda-forge::hydra-core \
+    conda-forge::pandas \
+    conda-forge::pytest \
+    conda-forge::mkl=2024.0 \
+    conda-forge::einops=0.6.1 \
+    bioconda::hmmer==3.3.2 \
+    bioconda::hhsuite==3.3.0 \
+    bioconda::kalign2==2.04 \
+    pytorch::pytorch=1.12.*
+  
+  . /usr/local/etc/profile.d/conda.sh
+  conda activate /usr/local/envs/ESMFold
+  export PATH="/opt/conda/envs/ESMFold/bin:$PATH"
+  
+  python3 -m pip install \
+    "fair-esm[esmfold]" \
+    biopython==1.79 \
+    deepspeed==0.5.9 \
+    dm-tree==0.1.6 \
+    ml-collections==0.1.0 \
+    numpy==1.21.2 \
+    PyYAML==5.4.1 \
+    requests==2.26.0 \
+    scipy==1.7.1 \
+    tqdm==4.62.2 \
+    typing-extensions==3.10.0.2 \
+    pytorch_lightning==1.5.10 \
+    wandb==0.12.21
+ 
+  python3 -m pip install 'dllogger @ git+https://github.com/NVIDIA/dllogger.git' 
+  python3 -m pip install 'openfold @ git+https://github.com/aqlaboratory/openfold.git@4b41059694619831a7db195b7e0988fc4ff3a307'
+  
+  cd /usr/local/envs/ESMFold/lib \
+    && git clone https://github.com/facebookresearch/esm \
+    && cd esm \
+    && python3 -m pip install --no-deps .
+  
+  # Download params
+  #    - Easiest way is by running a test sequence.
+  echo '>1' > /usr/local/envs/ESMFold/lib/esm/t.fa
+  echo 'AAAAAAAAAAAAAAAAA' >> /usr/local/envs/ESMFold/lib/esm/t.fa
+  esm-fold \
+    -i /usr/local/envs/ESMFold/lib/esm/t.fa \
+    -o /usr/local/envs/ESMFold/lib/esm/t.fa.o \
+    -m /model \
+    --cpu-only
+  rm -r /usr/local/envs/ESMFold/lib/esm/t.fa*
+  chmod -R 755 /model
+  
+%labels
+  Program ESMFold
+  ProgramVersion v2.0.1
+  ContainerVersion 1
+  Website https://github.com/facebookresearch/esm
+
+%help
+
+########################
+#### ESMFold v2.0.1 ####
+########################
+
+Local implementation of ESMFold v2.0.1.
+Evolutionary Scale Modeling (esm): Pretrained language models for proteins
+
+NOTE:
+  - The ESMFold database is included with this container in `/model`. To use this database include `-m /model` in your command.
+
+
+COMMANDS:
+  
+  Print help message:
+    singularity exec ESMFold_v2.0.1_cuda_v11.8.0-rev1.sif esm-fold --help
+  
+  Basic run example (CPU-only):
+    singularity exec ESMFold_v2.0.1_cuda_v11.8.0-rev1.sif esm-fold -i proteins.fa -o pdb_files -m /model --cpu-only
+  
+  Basic run example (GPU, assuming your system has one and it can be found):
+    singularity exec ESMFold_v2.0.1_cuda_v11.8.0-rev1.sif esm-fold -i proteins.fa -o pdb_files -m /model
+  
+  The command will make one prediction for every sequence in the fasta file. Multimers can
+  be predicted and should be entered in the fasta file as a single sequence, with chains
+  seprated by a ":" character.
+  
+  By default, predictions will be batched together so that shorter sequences are predicted
+  simultaneously. This can be disabled by setting --max-tokens-per-batch=0. Batching can
+  significantly improve prediction speed on shorter sequences.
+  
+  The --cpu-offload flag can be useful for making predictions on longer sequences. It will
+  attempt to offload some parameters to the CPU RAM, rather than storing on GPU.
+
+

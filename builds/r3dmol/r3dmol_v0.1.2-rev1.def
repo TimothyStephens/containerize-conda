@@ -1,0 +1,89 @@
+Bootstrap: docker
+From: nvidia/cuda:12.1.0-base-ubuntu22.04
+
+%environment
+  export LC_ALL=C
+  export NUMBA_CACHE_DIR=/tmp/numba_cache
+  export PATH="/opt/conda/envs/colabfold/bin:$PATH"
+  export MPLBACKEND=Agg
+  export MPLCONFIGDIR=/cache
+  export XDG_CACHE_HOME=/cache
+
+%post
+  # So we dont have to interactivly configure tzdata
+  ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+  DEBIAN_FRONTEND=noninteractive
+  
+  # Create /cache for Alphafold run
+  mkdir -p /cache
+  
+  # Install essential packages
+  apt-get update
+  apt-get install -y bc wget cuda-nvcc-$(echo 12.1.0 | cut -d'.' -f1,2 | tr '.' '-') --no-install-recommends --no-install-suggests
+  rm -rf /var/lib/apt/lists/*
+  
+  # Installing Mambaforge
+  wget -qnc https://github.com/conda-forge/miniforge/releases/download/23.11.0-0/Mambaforge-Linux-x86_64.sh
+  bash Mambaforge-Linux-x86_64.sh -bfp /usr/local
+  rm -f Mambaforge-Linux-x86_64.sh
+  mamba config --set auto_update_conda false
+  mamba clean -afy
+  chmod +x /usr/local/etc/profile.d/conda.sh
+  echo ". /usr/local/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+  echo "conda activate /usr/local/envs/colabfold" >> $SINGULARITY_ENVIRONMENT
+  
+  # Install ColabFold
+  CONDA_OVERRIDE_CUDA=$(echo 12.1.0 | cut -d'.' -f1,2) mamba create -y -n colabfold -c conda-forge -c bioconda colabfold=1.5.5 jaxlib==*=cuda*
+  pip install --upgrade "jax[cuda11_pip]==0.4.23" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+  
+  # Download params
+  . /usr/local/etc/profile.d/conda.sh
+  conda activate /usr/local/envs/colabfold
+  pip install silence-tensorflow
+  
+  # Download ColabFold_Utils scripts
+  cd /usr/local/envs/colabfold/bin
+  for file in pdb_plot.py;
+  do
+    wget https://raw.githubusercontent.com/TimothyStephens/ColabFold_Utils/main/$file -O ${file%.*} && chmod +x ${file%.*}
+  done
+  wget https://raw.githubusercontent.com/TimothyStephens/ColabFold_Utils/main/AlphaFold2-legend.png -O AlphaFold2-legend.png
+  
+  # Install R library r3dmol
+  mamba install --channel conda-forge r-rmarkdown r-shiny
+  Rscript -e "install.packages(\"r3dmol\", repos = \"http://cran.us.r-project.org\")"
+
+%labels
+  Program pdb_plot
+  ProgramVersion v1
+  ContainerVersion 1
+  Website https://github.com/TimothyStephens/ColabFold_Utils
+
+%help
+
+#######################
+#### Plot PDB File ####
+#######################
+
+Code to plot 3D interactive plot of protein structure in a PDB file.
+
+
+COMMANDS:
+  
+  Print help message:
+    singularity exec r3dmol_v0.1.2-rev1.sif pdb_plot --help
+  
+  Basic run examples:
+    # Single PDB file.
+    singularity exec r3dmol_v0.1.2-rev1.sif pdb_plot single.pdb html_out
+    
+    # Directory of PDB files
+    singularity exec r3dmol_v0.1.2-rev1.sif pdb_plot pdb_files/ html_out
+    
+    # ColabFold results file
+    singularity exec r3dmol_v0.1.2-rev1.sif pdb_plot colabfold_output html_out --colabfold
+    
+    # Heteromeric complexs
+    singularity exec r3dmol_v0.1.2-rev1.sif pdb_plot single.pdb html_out --all_chains
+    singularity exec r3dmol_v0.1.2-rev1.sif pdb_plot pdb_files/ html_out --all_chains
+

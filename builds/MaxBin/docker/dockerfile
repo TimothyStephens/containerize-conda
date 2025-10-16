@@ -1,0 +1,36 @@
+# Use a Miniconda base image
+FROM continuumio/miniconda3
+
+# Set environment variables
+ENV CONDA_DIR=/opt/conda
+ENV PATH=/opt/conda/envs/maxbin2/bin:$PATH
+
+# Install system dependencies, including the 'patch' utility
+RUN apt-get update && apt-get install -y patch && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create and set the working directory
+WORKDIR /app
+
+# Install MaxBin2 using Conda into a dedicated environment
+# This ensures dependencies are managed cleanly.
+RUN conda create -n maxbin2 -c bioconda -c conda-forge maxbin2=2.2.7 python=3.11.4 pandas=2.0.2 tqdm=4.65.0 --yes && \
+    conda clean -afy
+
+# Activate the Conda environment for subsequent RUN, CMD, and ENTRYPOINT instructions
+SHELL ["conda", "run", "-n", "maxbin2", "/bin/bash", "-c"]
+
+# Patch
+COPY MaxBin2_v2.2.7.patch .
+RUN P=$PWD && \
+  D=$(which run_MaxBin.pl | xargs readlink -f | xargs dirname) && \
+  cd $D/ && \
+  patch -N < $P/MaxBin2_v2.2.7.patch && \
+  rm $P/MaxBin2_v2.2.7.patch
+
+# Verify the installation by checking the version
+RUN run_MaxBin.pl --help
+
+# Set the default command to show MaxBin2 help
+CMD ["run_MaxBin.pl", "--help"]
+

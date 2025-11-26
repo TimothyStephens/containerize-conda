@@ -14,7 +14,7 @@ WORKDIR /app
 
 # Install MDMcleaner using Conda into a dedicated environment
 # This ensures dependencies are managed cleanly.
-RUN conda create -n mdmcleaner -c bioconda -c conda-forge mdmcleaner=0.8.7 --yes && \
+RUN conda create -n mdmcleaner -c bioconda -c conda-forge python=3.11 mdmcleaner=0.8.7 --yes && \
     conda clean -afy
 
 # Activate the Conda environment for subsequent RUN, CMD, and ENTRYPOINT instructions

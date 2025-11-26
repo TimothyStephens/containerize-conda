@@ -12,7 +12,7 @@ prefix="${program}_v${version}-rev${revision}"
 conda_env="/opt/conda/envs/${prefix}"
 mamba=$(which mamba)
 
-$mamba create -y -p ${conda_env} -c bioconda ${program}=${version}
+$mamba create -y -p ${conda_env} -c bioconda -c conda-forge python=3.11 ${program}=${version}
 #conda activate ${conda_env}
 #mdmcleaner makedb -o ${conda_env}/share/mdmcleaner_database 1>download.log 2>&1
 #mdmcleaner set_configs --db_basedir ${conda_env}/share/mdmcleaner_database

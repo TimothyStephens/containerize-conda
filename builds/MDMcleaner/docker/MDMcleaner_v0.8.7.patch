@@ -1,5 +1,14 @@
 --- read_gtdb_taxonomy.py	2023-01-12 05:33:49.000000000 -0500
 +++ read_gtdb_taxonomy.py	2025-02-03 15:26:07.779470307 -0500
+@@ -259,6 +259,8 @@
+ 			checksum = tokens[0]
+ 			filename = os.path.basename(tokens[1])
+ 			filename = re.sub(subpattern, "", filename) #gtdb renames all files in the latest folder (removing version from filename), but not in the corresponding md5-file... 
++			if filename == "MD5SUM.txt": # TGS - Fix issue where GTDB MD5SUM.txt file has an incorrect hash for itself.
++				continue
+ 			for pattern in patternlist:
+ 				if fnmatch.fnmatch(filename, pattern):
+ 					expectedfile = os.path.join(targetdir, filename)
 @@ -630,11 +630,11 @@
  			the seqids in their taxid-lookuptables as well as the protein files have a "RS_" or "GB_" prefix, but the genomic files do not.
  			have to remove that prefix here

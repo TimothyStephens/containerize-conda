@@ -1,0 +1,36 @@
+# Use a Miniconda base image
+FROM continuumio/miniconda3
+
+# Set environment variables
+ENV CONDA_DIR=/opt/conda
+ENV PATH=/opt/conda/envs/eggnog_mapper/bin:$PATH
+
+# Install system dependencies, including the 'patch' utility
+RUN apt-get update && apt-get install -y patch && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create and set the working directory
+WORKDIR /app
+
+# Install MDMcleaner using Conda into a dedicated environment
+# This ensures dependencies are managed cleanly.
+RUN conda create -n eggnog_mapper -c bioconda eggnog-mapper=2.1.13 --yes && \
+    conda clean -afy
+
+# Activate the Conda environment for subsequent RUN, CMD, and ENTRYPOINT instructions
+SHELL ["conda", "run", "-n", "eggnog_mapper", "/bin/bash", "-c"]
+
+# Patch
+COPY EggNOG-mapper_v2.1.13.patch .
+RUN P=$PWD && \
+  D=$(find "$CONDA_DIR" -name "download_eggnog_data.py" | xargs readlink -f | xargs dirname) && \
+  cd $D/ && \
+  patch -N < $P/EggNOG-mapper_v2.1.13.patch && \
+  rm $P/EggNOG-mapper_v2.1.13.patch
+
+# Verify the installation by checking the version
+RUN emapper.py --help
+
+# Set the default command to show MaxBin2 help
+CMD ["emapper.py", "--help"]
+

@@ -1,0 +1,11 @@
+--- AutoLineage.py	2026-01-20 12:52:30.549192181 -0500
++++ AutoLineage.py	2026-01-20 12:58:02.640681079 -0500
+@@ -274,6 +274,8 @@
+                         )
+                         # I don't expect this error message will ever be used.
+                         max_ind = max_ind[0]
++        else:
++            max_ind = max_ind[0] ##TGS
+ 
+         return int(max_ind)
+ 

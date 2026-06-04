@@ -94,3 +94,24 @@
  			basic_blastarglist = [ (blastrecords, blastdb, "diamond blastx") for blastdb in self.blastxdbs ]
  			# ~ import pdb; pdb.set_trace()
  			import time
+--- clean.py	2026-01-04 08:22:31.942042231 -0500
++++ clean.py	2026-01-04 08:24:10.556807987 -0500
+@@ -1,6 +1,7 @@
+ #!/usr/bin/env python
+ import sys
+ import os
++import shutil
+ import argparse
+ from mdmcleaner import getdb
+ from mdmcleaner import misc
+@@ -240,8 +241,8 @@
+ 
+ 	if db_suspects != None: #removing tempfiles from refdb-ambiguity assessments
+ 		for f in db_suspects.delete_filelist:
+-			os.remove(f)
+-		os.rmdir(db_suspects.tempdir)
++			shutil.rmtree(f, ignore_errors=True)
++		shutil.rmtree(db_suspects.tempdir, ignore_errors=True)
+ 		return db_suspects.blacklist_additions
+ 
+ if __name__ == '__main__':

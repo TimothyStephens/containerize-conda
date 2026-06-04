@@ -1,5 +1,14 @@
---- run_MaxBin.pl	2025-01-29 07:07:06.401398200 -0500
-+++ run_MaxBin.pl	2025-02-03 17:46:31.034550747 -0500
+--- run_MaxBin.pl	2026-01-13 09:26:40.600541167 -0500
++++ run_MaxBin.pl	2026-01-20 10:47:38.547825939 -0500
+@@ -461,7 +461,7 @@
+ 		{
+ 			unlink("$contig_f.frag.faa");
+ 		}
+-		getHMM($contig_f, "$contig_f.hmmout");
++		getHMM($contig_f, "$contig_f.hmmout", "", "$out_f.log");
+ 		touch("$contig_f.hmmout.$FINISH");
+ 	}
+ 
 @@ -498,7 +498,7 @@
  			{
  				writeLOG("Marker gene search reveals that the dataset cannot be binned (the medium of marker gene number <= 1). Program stop.\n");
@@ -9,3 +18,51 @@
  			}
  		}
  		elsif ($currbin ne $contig_f && $j >= $RECURSION_MAX)
+@@ -807,12 +807,12 @@
+ 		$cmd = "cat $out_f.*.fasta > $out_f.all.fasta";
+ 		print "$cmd\n";
+ 		system($cmd);
+-		getHMM("$out_f.all.fasta", "$contig_f.hmmout", "cuttc");
++		getHMM("$out_f.all.fasta", "$contig_f.hmmout", "cuttc", "$out_f.log");
+ 		unlink("$out_f.all.fasta");
+ 	}
+ 	else
+ 	{
+-		#getHMM($contig_f, "$contig_f.hmmout", "cuttc");
++		#getHMM($contig_f, "$contig_f.hmmout", "cuttc", "$out_f.log");
+ 	}
+ =cut
+ 	$completearr = countmarker("$contig_f.hmmout", $out_f, $outname, $MARKERHMM, "$out_f.marker");
+@@ -1035,19 +1035,27 @@
+ 	my $contig_f = $_[0];
+ 	my $out_f = $_[1];
+ 	my $cutmethod = $_[2];
++	my $log_f = $_[3];
+ 	my $cmd;
+ 
+ 	if (!(-e "$contig_f.frag.faa"))
+ 	{
+-		print "Running FragGeneScan....\n";
++		writeLOG("Running FragGeneScan....\n");
+ 		$cmd = "$RUNFRAG -genome=$contig_f -out=$contig_f.frag -complete=0 -train=complete -thread=$THREADNUM 1>$contig_f.frag.out 2>$contig_f.frag.err";
+ 		system($cmd);
+ 	}
+-	if (checkResult("$contig_f.frag.faa") == -1)
++	if (checkResult("$contig_f.frag.faa") == -1 && checkResult("$contig_f.frag.out") == -1 && checkResult("$contig_f.frag.err") == -1)
+ 	{
+-		print "Error running FragGeneScan. Output recorded in $contig_f.frag.out and $contig_f.frag.err.\n";
+-		print "=== Please make sure that you are running FragGeneScan 1.18 or above. ===\n";
+-		print "=== There are known bugs in v1.17 and before that will crash FragGeneScan program. ===\n";
++		writeLOG("Error running FragGeneScan. Output was empty, but so was $contig_f.frag.out and $contig_f.frag.err.\n");
++		writeLOG("This suggests that the dataset cannot be binned (likely too few and/or small contigs), rather then it actually being an error.\n");
++		closeLOG("$log_f");
++		exit(0);
++	}
++	elsif (checkResult("$contig_f.frag.faa") == -1)
++	{
++		writeLOG("Error running FragGeneScan. Output recorded in $contig_f.frag.out and $contig_f.frag.err.\n");
++		writeLOG("=== Please make sure that you are running FragGeneScan 1.18 or above. ===\n");
++		writeLOG("=== There are known bugs in v1.17 and before that will crash FragGeneScan program. ===\n");
+ 		exit(-1);
+ 	}
+ 	else

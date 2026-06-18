@@ -1,0 +1,39 @@
+# Use a Miniconda base image
+FROM anaconda/miniconda
+
+# Set environment variables
+ENV CONDA_DIR=/opt/miniconda3
+ENV PATH=/opt/miniconda3/envs/busco/bin:$PATH
+
+# Install system dependencies, including the 'patch' utility
+RUN apt-get update && apt-get install -y patch && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create and set the working directory
+WORKDIR /app
+
+# Install MaxBin2 using Conda into a dedicated environment
+# This ensures dependencies are managed cleanly.
+ENV CONDA_PLUGINS_USE_SHARDED_REPODATA=false
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+RUN conda create -n busco -c bioconda -c conda-forge biopython=1.79 busco=6.1.0 --yes && \
+    conda clean -afy
+
+# Activate the Conda environment for subsequent RUN, CMD, and ENTRYPOINT instructions
+SHELL ["conda", "run", "-n", "busco", "/bin/bash", "-c"]
+
+# Patch
+COPY BUSCO_v6.0.0.patch .
+RUN P=$PWD && \
+  D=$(which busco | xargs readlink -f | xargs dirname) && \
+  cd $D/../lib/python3.11/site-packages/busco/ && \
+  patch -N < $P/BUSCO_v6.0.0.patch && \
+  rm $P/BUSCO_v6.0.0.patch
+
+# Verify the installation by checking the version
+RUN busco --help
+
+# Set the default command to show MaxBin2 help
+CMD ["busco", "--help"]
+

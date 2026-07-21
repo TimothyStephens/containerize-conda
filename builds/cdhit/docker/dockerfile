@@ -1,0 +1,53 @@
+# ==========================================
+# Stage 1: Builder
+# ==========================================
+FROM ubuntu:24.04 AS builder
+
+ARG CDHIT_VERSION=4.8.1
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    wget \
+    make \
+    g++ \
+    zlib1g-dev
+
+WORKDIR /build
+
+RUN wget https://github.com/weizhongli/cdhit/archive/refs/tags/V${CDHIT_VERSION}.tar.gz -O cdhit.tar.gz
+
+# FIX: Create a known directory and strip the GitHub folder wrapper
+RUN mkdir -p /build/cdhit && tar -xzf cdhit.tar.gz -C /build/cdhit --strip-components=1
+
+# Now we know exactly where the Makefile is
+WORKDIR /build/cdhit
+RUN make MAX_SEQ=100000000 openmp=yes
+
+# ==========================================
+# Stage 2: Minimal Runtime Environment
+# ==========================================
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# FIX: Added libgomp1 here
+RUN apt-get update && apt-get install -y \
+    perl \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy binaries from our guaranteed path
+COPY --from=builder /build/cdhit/cd-hit /usr/local/bin/
+COPY --from=builder /build/cdhit/cd-hit-est /usr/local/bin/
+COPY --from=builder /build/cdhit/cd-hit-2d /usr/local/bin/
+COPY --from=builder /build/cdhit/cd-hit-est-2d /usr/local/bin/
+COPY --from=builder /build/cdhit/cd-hit-div /usr/local/bin/
+COPY --from=builder /build/cdhit/cd-hit-454 /usr/local/bin/
+
+COPY --from=builder /build/cdhit/*.pl /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/cd-hit* /usr/local/bin/*.pl
+
+WORKDIR /data
+
+CMD ["cd-hit", "-h"]

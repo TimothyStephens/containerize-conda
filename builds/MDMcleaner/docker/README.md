@@ -3,7 +3,7 @@
 ```bash
 program=mdmcleaner
 version=0.8.7
-tgs_version=3
+tgs_version=4
 
 docker build -t timothystephens/${program,,}:${version}-TGSv${tgs_version} .
 docker run timothystephens/${program,,}:${version}-TGSv${tgs_version} mdmcleaner -h

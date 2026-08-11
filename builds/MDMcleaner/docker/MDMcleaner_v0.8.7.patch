@@ -44,18 +44,6 @@
  	current_attempts = 0
  	
  	while current_attempts < max_attempts:
---- blasthandler.py	2023-01-12 05:33:49.000000000 -0500
-+++ blasthandler.py	2025-02-03 15:25:19.731093677 -0500
-@@ -843,7 +843,8 @@
- 	outfmt = re.sub(" std ", " qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore ", outfmt).strip().split() #blast allows "std" keyword in outfmt, diamond doesn't
- 	if type(query) == list: #list indicates a list of seqrecords
- 		# ~ print("QUERY IS A LIST")
--		tempname="delme_tempinput_mdmcleaner_diamondblastx.faa" # todo: figure out a better solution until a future diamond version hopefully may accept input from stdin...
-+		import random
-+		tempname="delme_tempinput_mdmcleaner_diamondblastx_" + str(random.randint(1, 1000000)) + ".faa" # todo: figure out a better solution until a future diamond version hopefully may accept input from stdin...
- 		misc.write_fasta(query, tempname)
- 		query = tempname
- 	# ~ else:
 --- getmarkers.py	2023-01-12 05:33:49.000000000 -0500
 +++ getmarkers.py	2025-02-03 15:24:53.518887983 -0500
 @@ -157,7 +157,8 @@
@@ -115,3 +103,62 @@
  		return db_suspects.blacklist_additions
  
  if __name__ == '__main__':
+--- blasthandler.py	2026-06-18 10:33:53.823238922 -0400
++++ blasthandler.py	2026-06-18 14:09:52.551710844 -0400
+@@ -843,7 +843,8 @@
+ 	outfmt = re.sub(" std ", " qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore ", outfmt).strip().split() #blast allows "std" keyword in outfmt, diamond doesn't
+ 	if type(query) == list: #list indicates a list of seqrecords
+ 		# ~ print("QUERY IS A LIST")
+-		tempname="delme_tempinput_mdmcleaner_diamondblastx.faa" # todo: figure out a better solution until a future diamond version hopefully may accept input from stdin...
++		import random
++		tempname="delme_tempinput_mdmcleaner_diamondblastx_" + str(random.randint(1, 1000000)) + ".faa" # todo: figure out a better solution until a future diamond version hopefully may accept input from stdin...
+ 		misc.write_fasta(query, tempname)
+ 		query = tempname
+ 	# ~ else:
+@@ -865,7 +866,7 @@
+ 		raise RuntimeError
+ 	return outname
+ 
+-def _run_any_blast(query, db, path_appl, outfmt = "6",outname = None ,threads = 1, force = False):
++def _run_any_blast_command(query, db, path_appl, outfmt = "6",outname = None ,threads = 1, force = False):
+ 	#TODO: fix stupid problem that blast (unfortunately) cannot handle gzipped query files. solution read in compressed fastas, pipe records to blast-functions via stdin (TODO: add this function also to diamond (already present in ncbi-blast)
+ 	appl = os.path.basename(path_appl)
+ 	appl_onlypath = os.path.dirname(path_appl)
+@@ -888,6 +889,37 @@
+ 	os.rename(outname + ".tmp", outname)
+ 	return outname
+ 
++def _run_any_blast(*args, **kwargs):
++	"""
++	Wrapper around _run_any_blast_command (formally '_run_any_blast') to catch RuntimeErrors and retry 
++	with a randomized delay (jitter) to ease filesystem/system stress.
++	
++	Added by: TGS
++	Date 2026/06/18
++	"""
++	
++	import random
++	import time
++	
++	max_retries = 3
++	
++	for attempt in range(max_retries + 1):
++		delay = random.uniform(5, 120) #* (attempt + 1)
++		sys.stderr.write(f"\tStarting attempt {attempt + 1}/{max_retries} after {delay:.2f} seconds delay.\n")
++		sys.stderr.flush()
++		time.sleep(delay)
++		try:
++			return _run_any_blast_command(*args, **kwargs)
++		
++		except RuntimeError as e:
++			if attempt == max_retries:
++				sys.stderr.write(f"\n[ERROR] Blast failed permanently after {max_retries} retries. Raising exception.\n")
++				raise e
++			sys.stderr.write(
++				f"\n[WARNING] _run_any_blast raised RuntimeError.\n"
++			)
++		sys.stderr.flush()
++
+ def _distribute_threads_over_jobs(total_threads, num_jobs): # to distribute N threads over M groups as evenly as possible, put (N/M) +1 in (N mod M) groups, and (N/M) in the rest
+ 	##TODO: test using misc.run_multiple_functions_parallel() for this instead! DELETE THIS IF MISC VERSION WORKS!
+ 	if num_jobs == 0:

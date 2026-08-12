@@ -47,7 +47,7 @@ prefix="${program}_v${version}-rev${revision}"
 conda_env="/opt/conda/envs/${prefix}"
 mamba=$(which mamba)
 
-$mamba create -y -p ${conda_env} -c bioconda ${program}=${version}
+$mamba create -y -p ${conda_env} -c conda-forge -c bioconda ${program}=${version}
 conda activate ${conda_env}
 
 # Add PYTHONPATH and change shabang in 'busco' bin script

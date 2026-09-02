@@ -82,5 +82,14 @@ singularity build --fakeroot --force ${prefix}.sif ${prefix}.def
 
 chown root ${prefix}.sif
 mv ${prefix}.sif /scratch/singularity/
+
+
+
+prefix="rstudio_r4.3.2-rev3"
+
+singularity build --fakeroot --force ${prefix}.sif ${prefix}.def
+
+chown root ${prefix}.sif
+mv ${prefix}.sif /scratch/singularity/
 ```
 
